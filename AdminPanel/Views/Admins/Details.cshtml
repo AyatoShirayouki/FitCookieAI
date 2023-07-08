@@ -1,0 +1,101 @@
+﻿@model AdminPanel.Models.Admins.AdminDetailsVM
+@{
+    ViewData["Title"] = "Admin Details";
+    Layout = "_Layout";
+}
+
+@if (!string.IsNullOrEmpty(Model.Error))
+{
+    <!--Error message-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa fa-exclamation-circle me-2"></i>@Model.Error
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- Basic Information Form -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Basic Information</h6>
+                    <div>
+                        <div class="mb-3">
+                            <label for="AdminEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="Email" id="AdminEmail" aria-describedby="admin_email" value="@Model.Admin.Email" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="AdminOldPassword" class="form-label">Password</label>
+                            <input type="password" name="Password" class="form-control" id="AdminOldPassword" value="***********" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="AdminFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="FirstName" id="AdminFirstName" aria-describedby="admin_first_name" value="@Model.Admin.FirstName" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="AdminLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="LastName" id="AdminLastName" aria-describedby="admin_last_name" value="@Model.Admin.LastName" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="AdminStatus" class="form-label">Status</label>
+                            <input type="text" class="form-control" name="Status" id="AdminStatus" aria-describedby="admin_status" value="@Model.AdminStatus.Name" disabled>
+                        </div>
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    @if (Model.Admin.Gender == "Male")
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="AdminGenderMale" value="Male" checked>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="AdminGenderMale" value="Male">
+                                    }
+                                    <label class="form-check-label" for="AdminGenederMale">
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    @if (Model.Admin.Gender == "Female")
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="AdminGenderFemale" value="Female" checked>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="AdminGenderFemale" value="Female">
+                                    }
+                                    <label class="form-check-label" for="AdminGenderFemale">
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="mb-3 form-check">
+                            <label for="AdminDOB" class="form-label">Date Of Birth</label>
+                            <input type="date" class="form-control" name="DOB" id="AdminDOB" aria-describedby="admin_fdate_of_birth" value="@Model.Admin.DOB.GetValueOrDefault().Date.ToString("yyyy-MM-dd")" asp-format="{0:yyyy-MM-dd}" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xl-6">
+                <div>
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">Profile picture</h6>
+                        <div class="mb-3">
+                            <center>
+                                <img class="rounded-circle" src="~/DASHMIN/Admins/ProfilePhotos/@Model.Admin.ProfilePhotoName" alt="" style="width: 150px; height: 150px;">
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Basic Information Form -->
+}

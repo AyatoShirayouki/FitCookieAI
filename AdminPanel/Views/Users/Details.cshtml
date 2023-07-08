@@ -1,0 +1,85 @@
+﻿@model AdminPanel.Models.Users.UserDetailsVM
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "_Layout";
+}
+
+@if (!string.IsNullOrEmpty(Model.Error))
+{
+        <!--Error message-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fa fa-exclamation-circle me-2"></i>@Model.Error
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+}
+else
+{
+    <!-- Basic Information Form -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Basic Information</h6>
+                    <div>
+                        <div class="mb-3">
+                            <label for="UserEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="Email" id="UserEmail" aria-describedby="User_email" value="@Model.User.Email" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="UserOldPassword" class="form-label">Password</label>
+                            <input type="password" name="Password" class="form-control" id="UserOldPassword" value="***********" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="UserFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="FirstName" id="UserFirstName" aria-describedby="User_first_name" value="@Model.User.FirstName" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="UserLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="LastName" id="UserLastName" aria-describedby="User_last_name" value="@Model.User.LastName" disabled>
+                        </div>
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    @if (Model.User.Gender.ToLower() == "male")
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="UserGenderMale" value="Male" checked>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="UserGenderMale" value="Male">
+                                    }
+                                    <label class="form-check-label" for="UserGenederMale">
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    @if (Model.User.Gender.ToLower() == "female")
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="UserGenderFemale" value="Female" checked>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="radio" name="Gender" id="UserGenderFemale" value="Female">
+                                    }
+                                    <label class="form-check-label" for="UserGenderFemale">
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="mb-3 form-check">
+                            <label for="UserDOB" class="form-label">Date Of Birth</label>
+                            <input type="date" class="form-control" name="DOB" id="UserDOB" aria-describedby="User_date_of_birth" value="@Model.User.DOB.GetValueOrDefault().Date.ToString("yyyy-MM-dd")" asp-format="{0:yyyy-MM-dd}" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Basic Information Form -->
+}
