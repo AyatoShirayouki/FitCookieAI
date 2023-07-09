@@ -18,9 +18,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddDbContext<MyDbContext>(options =>
-		options.UseSqlServer(configuration.GetConnectionString("MyDbConnectionString")));
-
 builder.Services.AddOptions();
 builder.Services.AddMemoryCache();
 builder.Services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
@@ -36,7 +33,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>
 {
-	options.IdleTimeout = TimeSpan.FromDays(7);
+	options.IdleTimeout = TimeSpan.FromMinutes(30);
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
