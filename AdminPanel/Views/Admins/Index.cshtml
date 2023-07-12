@@ -85,7 +85,10 @@
                                 @if (this.Context.Session.GetInt32("StatusId") == 1)
                                 {
                                     <a class="btn btn-sm btn-warning" href="/Admins/Edit?id=@admin.Id">Edit</a>
-                                    <a class="btn btn-sm btn-danger" href="/Admins/Delete?id=@admin.Id">Delete</a>
+                                    if (Model.Admins.Count() > 1)
+                                    {
+                                         <a class="btn btn-sm btn-danger" href="/Admins/Delete?id=@admin.Id">Delete</a>
+                                    }
                                 }
                             </td>
                         </tr>

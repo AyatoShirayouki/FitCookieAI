@@ -127,9 +127,10 @@ namespace AdminPanel.Controllers
                 model.FirstName = _getUsersByIdResponse.Body.FirstName;
                 model.LastName = _getUsersByIdResponse.Body.LastName;
                 model.Email = _getUsersByIdResponse.Body.Email;
-                model.Password = _getUsersByIdResponse.Body.Password;
+                model.Password = StringCipher.Decrypt(_getUsersByIdResponse.Body.Password, EncriptionVariables.PasswordEncriptionKey);
                 model.DOB = _getUsersByIdResponse.Body.DOB;
                 model.Gender = _getUsersByIdResponse.Body.Gender;
+                model.PhoneNumber = _getUsersByIdResponse.Body.PhoneNumber;
 
                 return View(model);
             }
@@ -173,6 +174,7 @@ namespace AdminPanel.Controllers
                 User.LastName = model.LastName;
                 User.DOB = model.DOB;
                 User.Gender = model.Gender;
+                User.PhoneNumber = model.PhoneNumber;
             }
             else
             {

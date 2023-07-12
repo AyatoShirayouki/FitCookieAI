@@ -24,7 +24,9 @@ namespace AdminPanel.Models.Users
 
         [Required(ErrorMessage = "This field is required!")]
         public string? Gender { get; set; }
-        public string? NewPassword { get; set; }
+
+        [Required(ErrorMessage = "This field is required!")]
+        public string? PhoneNumber { get; set; }
         public string? Error { get; set; }
         public string? Message { get; set; }
     }

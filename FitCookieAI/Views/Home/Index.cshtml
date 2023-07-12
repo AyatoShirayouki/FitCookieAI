@@ -103,13 +103,13 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="form-floating">
-							<textarea cols="30" rows="10" class="form-control" id="DietaryRestrictions" name="DietaryRestrictions"></textarea>
+							<textarea cols="30" rows="10" class="form-control" id="DietaryRestrictions" name="DietaryRestrictions" maxlength="60"></textarea>
 							<label for="DietaryRestrictions">Dietary Restrictions</label>
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="form-floating">
-							<textarea cols="30" rows="10" class="form-control" id="foodPreferences" name="FoodPreferences"></textarea>
+							<textarea cols="30" rows="10" class="form-control" id="foodPreferences" name="FoodPreferences" maxlength="60"></textarea>
 							<label for="foodPreferences">Food Preferences</label>
 						</div>
 					</div>
@@ -176,7 +176,6 @@
 					<br />
 					<br />
 					<button type="button" name="generate" id="btn-generate-1" class="btn-generate btn btn-primary-gradient rounded-pill py-3 px-5 col-12 text-center">Generate</button>
-					<!--<button type="button" name="logout" id="btn-logout-authenticated" class="btn-logout btn btn-primary-gradient rounded-pill py-3 px-5 col-12 text-center">Logout</button>-->
 				}
 				else
 				{
@@ -239,7 +238,7 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-floating">
-										<input type="email" class="form-control" id="email-signup" name="Email" placeholder="Your Email" required>
+										<input type="email" class="form-control" id="email-signup" name="Email" placeholder="Your Email" maxlength="60" required>
 										<label for="email-signup">Email</label>
 									</div>
 									<small class="required">required</small>
@@ -249,7 +248,7 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="text" class="form-control" id="firstName" name="FirstName" placeholder="First Name" required>
+										<input type="text" class="form-control" id="firstName" name="FirstName" placeholder="First Name" maxlength="50" required>
 										<label for="firstName">First Name</label>
 									</div>
 									<small class="required">required</small>
@@ -257,7 +256,7 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="text" class="form-control" id="lastName" name="LastName" placeholder="Last Name" required>
+										<input type="text" class="form-control" id="lastName" name="LastName" placeholder="Last Name" maxlength="50" required>
 										<label for="lastName">Last Name</label>
 									</div>
 									<small class="required">required</small>
@@ -267,7 +266,7 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="password" class="form-control" id="password" name="Password" placeholder="Password" required>
+										<input type="password" class="form-control" id="password" name="Password" placeholder="Password" maxlength="30" required>
 										<label for="password">Password</label>
 									</div>
 									<small class="required">required</small>
@@ -275,7 +274,7 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Confirm Password" required>
+										<input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Confirm Password" maxlength="30" required>
 										<label for="confirmPassword">Confirm Password</label>
 									</div>
 									<small class="required">required</small>
@@ -286,8 +285,8 @@
 								<div class="col-lg-6">
 									<div class="form-floating">
 										<select id="GenderList" name="Gender" class="form-select" tabindex="-98">
-											<option value="male">Male</option>
-											<option value="female">Female</option>
+											<option value="Male">Male</option>
+											<option value="Female">Female</option>
 										</select>
 										<label for="GenderList">Gender</label>
 									</div>
@@ -300,6 +299,16 @@
 									</div>
 									<small class="required">required</small>
 									<span id="age-validation" class="error"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-floating">
+										<input type="tel" class="form-control" id="tel" name="PhoneNumber" placeholder="Your Phone Number" maxlength="20" required>
+										<label for="tel">Your Phone Number</label>
+									</div>
+									<small class="required">required</small>
+									<span id="phone-number-validation" class="error"></span>
 								</div>
 							</div>
 							<div id="sign-up-authentication-error" class="row">
@@ -327,7 +336,6 @@
 					</div>
 					<br />
 					<br />
-					<!--<button type="button" name="logout" id="btn-logout" class="btn-logout btn btn-primary-gradient rounded-pill py-3 px-5 col-12 text-center">Logout</button>-->
 					<button type="button" name="generate" id="btn-generate" class="btn-generate btn btn-primary-gradient rounded-pill py-3 px-5 col-12 text-center">Generate</button>
 					<button type="button" name="Login" id="btn-login" class="btn btn-primary-gradient rounded-pill py-3 px-5 col-12 text-center">Login</button>
 					<button type="button" name="SignUp" id="btn-sign-up" class="btn btn-primary-gradient rounded-pill py-3 px-5 col-12 text-center">Sign Up</button>

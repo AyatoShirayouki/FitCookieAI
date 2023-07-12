@@ -72,6 +72,10 @@ else
                                 </div>
                             </div>
                         </fieldset>
+                        <div class="mb-3">
+                        <label for="UserPhoneNumber" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" name="PhoneNumber" id="UserPhoneNumber" aria-describedby="user_phone_number" value="@Model.User.PhoneNumber" disabled>
+                    </div>
                         <div class="mb-3 form-check">
                             <label for="UserDOB" class="form-label">Date Of Birth</label>
                             <input type="date" class="form-control" name="DOB" id="UserDOB" aria-describedby="User_date_of_birth" value="@Model.User.DOB.GetValueOrDefault().Date.ToString("yyyy-MM-dd")" asp-format="{0:yyyy-MM-dd}" disabled>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ItyyjqFt3DJ1K0Ee/h62MbyGm3BC5vtTBK9dzzknAp4=",
+  "Hash": "uN6l6/Bpt5QuZ2Vs+rw90+w0PoBsq9b3lE09lE+lbCw=",
   "Source": "AdminPanel",
   "BasePath": "_content/AdminPanel",
   "Mode": "Default",
@@ -78,6 +78,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\AdminPanel\\wwwroot\\DASHMIN\\Admins\\ProfilePhotos\\3c7c8c60-dcda-49b2-ad93-4a66d2515e2a-45011798_1229559583876237_6186869985814511616_o.jpg",
+      "SourceId": "AdminPanel",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\AdminPanel\\wwwroot\\",
+      "BasePath": "_content/AdminPanel",
+      "RelativePath": "DASHMIN/Admins/ProfilePhotos/3c7c8c60-dcda-49b2-ad93-4a66d2515e2a-45011798_1229559583876237_6186869985814511616_o.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\DASHMIN\\Admins\\ProfilePhotos\\3c7c8c60-dcda-49b2-ad93-4a66d2515e2a-45011798_1229559583876237_6186869985814511616_o.jpg"
     },
     {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\AdminPanel\\wwwroot\\DASHMIN\\Admins\\ProfilePhotos\\933f5ac1-7ec9-4608-a975-a7e1acd33551-45140246_1229558850542977_4038923980290129920_o.jpg",

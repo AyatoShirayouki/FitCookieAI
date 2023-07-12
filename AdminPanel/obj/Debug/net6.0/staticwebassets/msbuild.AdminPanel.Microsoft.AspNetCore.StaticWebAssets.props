@@ -32,6 +32,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\site.css))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\DASHMIN\Admins\ProfilePhotos\3c7c8c60-dcda-49b2-ad93-4a66d2515e2a-45011798_1229559583876237_6186869985814511616_o.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>AdminPanel</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AdminPanel</BasePath>
+      <RelativePath>DASHMIN/Admins/ProfilePhotos/3c7c8c60-dcda-49b2-ad93-4a66d2515e2a-45011798_1229559583876237_6186869985814511616_o.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\DASHMIN\Admins\ProfilePhotos\3c7c8c60-dcda-49b2-ad93-4a66d2515e2a-45011798_1229559583876237_6186869985814511616_o.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\DASHMIN\Admins\ProfilePhotos\933f5ac1-7ec9-4608-a975-a7e1acd33551-45140246_1229558850542977_4038923980290129920_o.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>AdminPanel</SourceId>

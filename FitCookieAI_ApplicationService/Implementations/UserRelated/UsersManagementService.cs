@@ -37,7 +37,9 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 							LastName = item.LastName,
 							Password = item.Password,
 							DOB = item.DOB,
-							Gender = item.Gender
+							Gender = item.Gender,
+							DOJ = item.DOJ,
+							PhoneNumber = item.PhoneNumber
 						});
 					}
 
@@ -71,6 +73,8 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 					UserDTO.LastName = User.LastName;
 					UserDTO.DOB = User.DOB;
 					UserDTO.Gender = User.Gender;
+					UserDTO.DOJ = User.DOJ;
+					UserDTO.PhoneNumber = User.PhoneNumber;
 
 					unitOfWork.Commit();
 				}
@@ -103,6 +107,8 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 							Password = UserDTO.Password,
 							DOB = UserDTO.DOB,
 							Gender = UserDTO.Gender,
+							DOJ = UserDTO.DOJ,
+							PhoneNumber = UserDTO.PhoneNumber
 						};
 					}
 					else
@@ -116,7 +122,9 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 							Password = UserDTO.Password,
 							DOB = UserDTO.DOB,
 							Gender = UserDTO.Gender,
-						};
+                            DOJ = UserDTO.DOJ,
+                            PhoneNumber = UserDTO.PhoneNumber
+                        };
 					}
 
 					await UsersRepo.Save(User);

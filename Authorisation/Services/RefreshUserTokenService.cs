@@ -1,7 +1,10 @@
 ﻿using Authorisation.Configuration;
 using Authorisation.DTOs;
+using FitCookieAI_ApplicationService.DTOs.AdminRelated;
 using FitCookieAI_ApplicationService.DTOs.UserRelated;
+using FitCookieAI_Data.Entities.AdminRelated;
 using FitCookieAI_Data.Entities.UserRelated;
+using FitCookieAI_Repository.Implementations.AdminRelated;
 using FitCookieAI_Repository.Implementations.Base;
 using FitCookieAI_Repository.Implementations.UserRelated;
 using Microsoft.Extensions.Options;
@@ -27,7 +30,45 @@ namespace Authorisation.Services
 			_tokenValidationParams = tokenValidationParams;
 		}
 
-		public async Task<JwtResult> RefreshUserToken(TokenRequestDTO tokenRequest)
+        public static async Task<List<RefreshUserTokenDTO>> GetAll()
+        {
+            using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
+            {
+                unitOfWork.BeginTransaction();
+
+                RefreshUserTokensRepository refreshUserTokensRepo = new RefreshUserTokensRepository(unitOfWork);
+                List<RefreshUserToken> refreshUserTokens = await refreshUserTokensRepo.GetAll();
+
+                List<RefreshUserTokenDTO> refreshUserTokensDTO = new List<RefreshUserTokenDTO>();
+
+                if (refreshUserTokens != null)
+                {
+                    foreach (var item in refreshUserTokens)
+                    {
+                        refreshUserTokensDTO.Add(new RefreshUserTokenDTO
+                        {
+                            Id = item.Id,
+                            UserId = item.UserId,
+                            Token = item.Token,
+                            JwtId = item.JwtId,
+                            IsUsed = item.IsUsed,
+                            IsRevorked = item.IsRevorked,
+                            AddedDate = item.AddedDate,
+                            ExpiryDate = item.ExpiryDate,
+                        });
+                    }
+
+                    unitOfWork.Commit();
+                }
+                else
+                {
+                    unitOfWork.Rollback();
+                }
+                return refreshUserTokensDTO;
+            }
+        }
+
+        public async Task<JwtResult> RefreshUserToken(TokenRequestDTO tokenRequest)
 		{
 			using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
 			{

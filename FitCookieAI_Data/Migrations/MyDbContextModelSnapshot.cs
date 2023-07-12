@@ -36,13 +36,13 @@ namespace FitCookieAI_Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -50,8 +50,8 @@ namespace FitCookieAI_Data.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -74,12 +74,12 @@ namespace FitCookieAI_Data.Migrations
                         new
                         {
                             Id = 1,
-                            DOB = new DateTime(2023, 6, 22, 19, 14, 45, 517, DateTimeKind.Local).AddTicks(213),
+                            DOB = new DateTime(2023, 7, 12, 22, 25, 48, 775, DateTimeKind.Local).AddTicks(7728),
                             Email = "admin@mail.com",
                             FirstName = "Admin",
                             Gender = "Male",
                             LastName = "User",
-                            Password = "eDTUBdyiMSnqmF7NacYqIgqIlQVKWT3/LoGwuGsI5fYh4ET2V6iE9KIfXWDYkjHk",
+                            Password = "+bhktk3BS/YhlZo50mtKhk525PiG8t7c7V/Cef+L+0zgOo3wLQLMyphJjvCelNOy",
                             ProfilePhotoName = "",
                             StatusId = 1
                         });
@@ -315,15 +315,18 @@ namespace FitCookieAI_Data.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
+                    b.Property<DateTime>("DOJ")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -331,13 +334,18 @@ namespace FitCookieAI_Data.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 

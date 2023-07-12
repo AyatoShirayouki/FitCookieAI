@@ -33,6 +33,86 @@ namespace FitCookieAI_API.Controllers.AdminRelated
         }
 
         [HttpGet]
+        [Route("GetAllActiveAdmins")]
+        public async Task<IActionResult> GetAllActiveAdmins([FromHeader] string token, [FromHeader] string refreshToken)
+        {
+            if (token != null && refreshToken != null)
+            {
+                tokenRequest.Token = token;
+                tokenRequest.RefreshToken = refreshToken;
+
+                JwtResult jwtAdminToken = await _authentication.RefreshAdminToken(tokenRequest);
+
+                if (jwtAdminToken.JwtSuccess == true)
+                {
+                    response.Code = 201;
+
+                    response.Body = await RefreshAdminTokenService.GetAll();
+
+                    HttpContext.Response.Headers.Add("token", jwtAdminToken.Token);
+                    HttpContext.Response.Headers.Add("refreshToken", jwtAdminToken.RefreshToken);
+
+                    response.JwtSuccess = jwtAdminToken.JwtSuccess;
+                    response.JwtErrors = jwtAdminToken.JwtErrors;
+                }
+                else if (jwtAdminToken.JwtSuccess != true)
+                {
+                    response.Code = 200;
+
+                    response.JwtSuccess = jwtAdminToken.JwtSuccess;
+                    response.JwtErrors = jwtAdminToken.JwtErrors;
+                }
+            }
+            else
+            {
+                response.Code = 400;
+                response.Error = "Missing data - Token or refresh token is null or invalid!";
+            }
+
+            return new JsonResult(response);
+        }
+
+        [HttpGet]
+        [Route("GetAllActiveUsers")]
+        public async Task<IActionResult> GetAllActiveUsers([FromHeader] string token, [FromHeader] string refreshToken)
+        {
+            if (token != null && refreshToken != null)
+            {
+                tokenRequest.Token = token;
+                tokenRequest.RefreshToken = refreshToken;
+
+                JwtResult jwtAdminToken = await _authentication.RefreshAdminToken(tokenRequest);
+
+                if (jwtAdminToken.JwtSuccess == true)
+                {
+                    response.Code = 201;
+
+                    response.Body = await RefreshUserTokenService.GetAll();
+
+                    HttpContext.Response.Headers.Add("token", jwtAdminToken.Token);
+                    HttpContext.Response.Headers.Add("refreshToken", jwtAdminToken.RefreshToken);
+
+                    response.JwtSuccess = jwtAdminToken.JwtSuccess;
+                    response.JwtErrors = jwtAdminToken.JwtErrors;
+                }
+                else if (jwtAdminToken.JwtSuccess != true)
+                {
+                    response.Code = 200;
+
+                    response.JwtSuccess = jwtAdminToken.JwtSuccess;
+                    response.JwtErrors = jwtAdminToken.JwtErrors;
+                }
+            }
+            else
+            {
+                response.Code = 400;
+                response.Error = "Missing data - Token or refresh token is null or invalid!";
+            }
+
+            return new JsonResult(response);
+        }
+
+        [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAll([FromHeader] string token, [FromHeader] string refreshToken)
         {
@@ -230,7 +310,7 @@ namespace FitCookieAI_API.Controllers.AdminRelated
                     }
                     else
                     {
-                        response.Code = 201;
+                        response.Code = 200;
                     }
 
                     response.JwtSuccess = jwtAdminToken.JwtSuccess;

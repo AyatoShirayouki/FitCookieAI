@@ -89,8 +89,8 @@
       "PackagePath": "staticwebassets\\img\\screenshot-frame.png"
     },
     {
-      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\SignUp.js",
-      "PackagePath": "staticwebassets\\js\\SignUp.js"
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\FormSteps.js",
+      "PackagePath": "staticwebassets\\js\\FormSteps.js"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\checkout.js",

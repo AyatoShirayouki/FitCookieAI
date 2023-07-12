@@ -41,9 +41,11 @@
 		public string Admins_GetById = "/api/Admins/GetById?";
 		public string Admins_Update = "/api/Admins/Update";
 		public string Admins_Delete = "/api/Admins/Delete?";
+        public string Admins_GetAllActiveAdmins = "/api/Admins/GetAllActiveAdmins";
+        public string Admins_GetAllActiveUsers = "/api/Admins/GetAllActiveUsers";
 
-		//AdminStatuses
-		public string AdminStatuses_GetAll = "/api/AdminStatuses/GetAll";
+        //AdminStatuses
+        public string AdminStatuses_GetAll = "/api/AdminStatuses/GetAll";
 		public string AdminStatuses_GetById = "/api/AdminStatuses/GetById?";
 		public string AdminStatuses_Save = "/api/AdminStatuses/Save";
 		public string AdminStatuses_Delete = "/api/AdminStatuses/Delete?";

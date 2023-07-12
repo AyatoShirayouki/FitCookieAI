@@ -2,6 +2,7 @@
 using Authorisation.DTOs;
 using Authorisation.Services;
 using FitCookieAI_API.Responses;
+using FitCookieAI_ApplicationService.DTOs.AdminRelated;
 using FitCookieAI_ApplicationService.DTOs.UserRelated;
 using FitCookieAI_ApplicationService.Implementations.UserRelated;
 using GlobalVariables.Encription;
@@ -245,6 +246,8 @@ namespace FitCookieAI_API.Controllers.UserRelated
                 {
                     response.Code = 201;
 
+                    userDTO.Password = StringCipher.Encrypt(userDTO.Password, EncriptionVariables.PasswordEncriptionKey);
+
                     await UsersManagementService.Save(userDTO);
                     response.Body = "User has been updated!";
 
@@ -257,6 +260,8 @@ namespace FitCookieAI_API.Controllers.UserRelated
                 else if (jwtAdminToken.JwtSuccess == true)
                 {
                     response.Code = 201;
+
+                    userDTO.Password = StringCipher.Encrypt(userDTO.Password, EncriptionVariables.PasswordEncriptionKey);
 
                     await UsersManagementService.Save(userDTO);
                     response.Body = "User has been updated!";

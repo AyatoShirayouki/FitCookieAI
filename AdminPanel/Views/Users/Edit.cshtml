@@ -90,6 +90,11 @@
                             </div>
                         </div>
                     </fieldset>
+                    <div class="mb-3">
+                        <label for="UserPhoneNumber-edit" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" name="PhoneNumber" id="UserPhoneNumber-edit" aria-describedby="user_phone_number" value="@Model.PhoneNumber">
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, null, new {@class = "error" })
+                    </div>
                     <div class="mb-3 form-check">
                         <label for="UserDOB-edit" class="form-label">Date Of Birth</label>
                         <input type="date" class="form-control" name="DOB" id="UserDOB-edit" aria-describedby="user_date_of_birth" value="@Model.DOB.GetValueOrDefault().Date.ToString("yyyy-MM-dd")" asp-format="{0:yyyy-MM-dd}">

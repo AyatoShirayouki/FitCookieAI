@@ -23,6 +23,9 @@ namespace FitCookieAI.Models
 		public string? Gender { get; set; }
 
 		[Required]
+		public string? PhoneNumber { get; set; }
+
+		[Required]
 		public DateTime DOB { get; set; }
 	}
 }

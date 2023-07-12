@@ -27,7 +27,45 @@ namespace Authorisation.Services
 			_tokenValidationParams = tokenValidationParams;
 		}
 
-		public async Task<JwtResult> RefreshAdminToken(TokenRequestDTO tokenRequest)
+        public static async Task<List<RefreshAdminTokenDTO>> GetAll()
+        {
+            using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
+            {
+                unitOfWork.BeginTransaction();
+
+                RefreshAdminTokensRepository refreshAdminTokensRepo = new RefreshAdminTokensRepository(unitOfWork);
+                List<RefreshAdminToken> refreshAdminTokens = await refreshAdminTokensRepo.GetAll();
+
+                List<RefreshAdminTokenDTO> refreshAdminTokensDTO = new List<RefreshAdminTokenDTO>();
+
+                if (refreshAdminTokens != null)
+                {
+                    foreach (var item in refreshAdminTokens)
+                    {
+                        refreshAdminTokensDTO.Add(new RefreshAdminTokenDTO
+                        {
+                            Id = item.Id,
+                           AdminId = item.AdminId,
+						   Token = item.Token,
+						   JwtId = item.JwtId,
+						   IsUsed = item.IsUsed,
+						   IsRevorked = item.IsRevorked,
+						   AddedDate = item.AddedDate,
+						   ExpiryDate= item.ExpiryDate,
+                        });
+                    }
+
+                    unitOfWork.Commit();
+                }
+                else
+                {
+                    unitOfWork.Rollback();
+                }
+                return refreshAdminTokensDTO;
+            }
+        }
+
+        public async Task<JwtResult> RefreshAdminToken(TokenRequestDTO tokenRequest)
 		{
 			using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
 			{

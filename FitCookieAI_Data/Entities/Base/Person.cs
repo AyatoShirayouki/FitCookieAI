@@ -10,7 +10,7 @@ namespace FitCookieAI_Data.Entities.Base
 	public class Person : BaseEntity
 	{
 		[Required]
-		[MaxLength(80)]
+		[MaxLength(60)]
 		public string? Email { get; set; }
 
 		[Required]
@@ -18,11 +18,11 @@ namespace FitCookieAI_Data.Entities.Base
 		public string? Password { get; set; }
 
 		[Required]
-		[MaxLength(60)]
+		[MaxLength(50)]
 		public string? FirstName { get; set; }
 
 		[Required]
-		[MaxLength(60)]
+		[MaxLength(50)]
 		public string? LastName { get; set; }
 
 		[Required]

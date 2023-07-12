@@ -275,8 +275,6 @@
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                             &copy; <a class="border-bottom" href="#">FitCookieAi</a>, All Right Reserved.
-
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                             Designed By <a class="border-bottom" href="https://www.linkedin.com/in/alexander-nestorov-283b881b8/">Alexander Nestorov</a>
                             </br>
                             Distributed By <a class="border-bottom" href="https://www.linkedin.com/in/rossgeorgiev/" target="_blank">Rosen Rosenov</a>
@@ -310,7 +308,9 @@
     <script src="~/lib/waypoints/waypoints.min.js"></script>
     <script src="~/lib/counterup/counterup.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/js/SignUp.js"></script>
+
+    <!-- Custom -->
+    <script src="~/js/FormSteps.js"></script>
     <script src="~/js/site.js"></script>
 
     <!-- Template Javascript -->
@@ -328,9 +328,7 @@
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',  
                     data: data,
                     success: function (result) {
-                        
                         $('#result-container').find('#result').html(result);
-
                         $('#loading-container').hide();
                         $("#result-container").show();
 
@@ -404,7 +402,7 @@
                             $("#DietaryRestrictions").text('');
                             $("#foodPreferences").text('');
 
-                            $('#btn-logout').hide();
+                            $('#btn-logout').css('visibility', 'hidden');;
                             $('#btn-generate').hide();
                             $('#result-container').hide();
                             // reset form and clean user input
@@ -503,25 +501,30 @@
                             $("#btn-sign-up").hide();
 
                             $("#authenticated").find("#user-names").text(response.names);
-                            $('#btn-logout').show();
+                            $('#btn-logout').css('visibility', 'visible');
                             $('#btn-generate').show();
                             $("#authenticated").show();
+                            $("#login-authentication-error").hide();
                             console.log('Login successful');
                         } else if (response.code === 400) {
                             $('#loading-container2').hide();
 
                             $("#authentication-options").show();
                             $("#hasAccount").show();
-                            $("#noAccount").show();
+                            $("#noAccount").hide();
 
                             $("#login-authentication-error").show();
-                            $("#login-authentication-error").find("#login-authentication-error-message").text(response.message);
+                            $("#login-authentication-error").find("#login-authentication-error-message").text('Login failed!');
                             console.log('Invalid data');
                         } else if (response.code === 200) {
                             $('#loading-container2').hide();
                             $("#authentication-options").show();
                             $("#hasAccount").show();
-                            $("#noAccount").show();
+                            $("#noAccount").hide();
+
+                            $("#login-authentication-error").show();
+                            $("#login-authentication-error").find("#login-authentication-error-message").html('Email or Password is incorrect!');
+
                             // Handle unsuccessful login attempt
                             console.log('Login failed');
                         }
@@ -530,7 +533,7 @@
                         $('#loading-container2').hide();
                         $("#authentication-options").show();
                         $("#hasAccount").show();
-                        $("#noAccount").show();
+                        $("#noAccount").hide();
                         // Handle any errors that occurred during the AJAX request
                         console.log('Error: ' + textStatus + ' ' + errorThrown);
                     }
@@ -551,6 +554,7 @@
                 var confirmPassword = $('#confirmPassword').val();
                 var gender = $('#GenderList').val();
                 var dob = $('#age').val();
+                var phoneNumber = $('#tel').val();
 
                 // Create a JavaScript object to represent the SignUpVM model
                 var signUpData = {
@@ -560,7 +564,8 @@
                     Password: password,
                     ConfirmPassword: confirmPassword,
                     Gender: gender,
-                    DOB: dob
+                    DOB: dob,
+                    PhoneNumber: phoneNumber
                 };
 
                 console.log(signUpData);
@@ -585,17 +590,18 @@
                             $("#sign-up-authentication-error").hide();
 
                             $("#authenticated").find("#user-names").text(response.names);
-                            $('#btn-logout').show();
+                            $('#btn-logout').css('visibility', 'visible');
                             $("#authenticated").show();
 
                             console.log(response.message);
 
-                            submitForm();
+                            $('#btn-generate').show();
+                            
                         } else if (response.code === 400) {
                             $('#loading-container2').hide();
 
                             $("#authentication-options").show();
-                            $("#hasAccount").show();
+                            $("#hasAccount").hide();
                             $("#noAccount").show();
 
                             $("#sign-up-authentication-error").show();
@@ -605,7 +611,7 @@
                             $('#loading-container2').hide();
 
                             $("#authentication-options").show();
-                            $("#hasAccount").show();
+                            $("#hasAccount").hide();
                             $("#noAccount").show();
 
                             $("#sign-up-authentication-error").show();
@@ -617,7 +623,7 @@
                         $('#loading-container2').hide();
 
                         $("#authentication-options").show();
-                        $("#hasAccount").show();
+                        $("#hasAccount").hide();
                         $("#noAccount").show();
 
                         // Handle any errors that occurred during the AJAX request

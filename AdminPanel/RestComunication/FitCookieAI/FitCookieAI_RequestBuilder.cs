@@ -115,24 +115,29 @@
 		{
 			return uri + _router.Admins_GetById + $"id={id}";
 		}
-
 		public string DeleteAdminsByIdRequestBuilder(string uri, int id)
 		{
 			return uri + _router.Admins_Delete + $"id={id}";
 		}
-
 		public string UpdateAdminsRequestBuilder(string uri)
 		{
 			return uri + _router.Admins_Update;
 		}
-
 		public string GetAllAdminsRequestBuilder(string uri)
 		{
 			return uri + _router.Admins_GetAll;
 		}
+        public string GetAllActiveAdminsRequestBuilder(string uri)
+        {
+            return uri + _router.Admins_GetAllActiveAdmins;
+        }
+        public string GetAllActiveUsersRequestBuilder(string uri)
+        {
+            return uri + _router.Admins_GetAllActiveUsers;
+        }
 
-		//AdminStatuses
-		public string DeleteAdminStatusesByIdRequestBuilder(string uri, int id)
+        //AdminStatuses
+        public string DeleteAdminStatusesByIdRequestBuilder(string uri, int id)
 		{
 			return uri + _router.AdminStatuses_Delete + $"id={id}";
 		}

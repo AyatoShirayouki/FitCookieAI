@@ -3,8 +3,8 @@
     $('#sign-up-authentication-error').hide();
     $('#login-authentication-error').hide();
     $('#authenticated').hide();
-    $('#btn-logout').hide();
     $('#btn-generate').hide();
+    $('#btn-logout').css('visibility', 'hidden');;
 
     /////////////////////////////////// Login and SignUp Validations ///////////////////////////////////
     function validateEmail(email) {

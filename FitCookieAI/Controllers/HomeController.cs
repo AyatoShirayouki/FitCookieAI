@@ -116,7 +116,8 @@ namespace FitCookieAI.Controllers
 				LastName= model.LastName,
 				Password= model.Password,
 				Gender= model.Gender,
-				DOB= model.DOB
+				DOB= model.DOB,
+				PhoneNumber = model.PhoneNumber
 			};
 
 			_signUpUserResponse = await _fitCookieAIRequestExecutor.SignUpAction(user, _fitCookieAIRequestBuilder.SignUpRequestBuilder(baseFitcookieAIUri));
@@ -163,7 +164,7 @@ namespace FitCookieAI.Controllers
 			TimeSpan age = DateTime.Now.Subtract(model.DOB);
 			int years = (int)(age.TotalDays / 365.25);
 
-			string input = $"As a profesional dietitian recomend me a diet plan with a huge variety of delicious meals meals which are different for every day of the week, " +
+			string input = $"As a profesional dietitian recomend me a diet plan with a huge variety of delicious meals meals which must be different for every day of the week, " +
 				$"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" + 
 				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}. Recomend me a list of suplements (strenght building and health related) which would help me based on my needs in html format as an unordered list" +
 				$"and briefly explain the benefits of each of them." + $" Return the result as a HTML table in html format with colums: day of the week, meals(here you should include the quantity of each part of the meal in grams)" +

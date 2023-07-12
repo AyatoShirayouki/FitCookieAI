@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "T+EgMb0HgjwJwsH1c4Y6FCbThVSwolt/2bjoWF1DCS4=",
+  "Hash": "gVHcBim5rPYKuY6nwcYrtp9WgxIod8Xbaxetsrf6kLw=",
   "Source": "FitCookieAI",
   "BasePath": "_content/FitCookieAI",
   "Mode": "Default",
@@ -437,6 +437,23 @@
       "OriginalItemSpec": "wwwroot\\js\\checkout.js"
     },
     {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\FormSteps.js",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "js/FormSteps.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\FormSteps.js"
+    },
+    {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\main.js",
       "SourceId": "FitCookieAI",
       "SourceType": "Discovered",
@@ -452,23 +469,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\main.js"
-    },
-    {
-      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\SignUp.js",
-      "SourceId": "FitCookieAI",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
-      "BasePath": "_content/FitCookieAI",
-      "RelativePath": "js/SignUp.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\SignUp.js"
     },
     {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\site.js",

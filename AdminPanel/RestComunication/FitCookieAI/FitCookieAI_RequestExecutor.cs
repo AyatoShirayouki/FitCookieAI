@@ -242,9 +242,69 @@ namespace AdminPanel.RestComunication.FitCookieAI
 				return _getAdminsByIdResponse;
 			}
 		}
+        public async Task<GetAllActiveAdminsResponse> GetAllActiveAdminsAction(string requestQuery)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                GetAllActiveAdminsResponse _getAllActiveAdminsRespponse = new GetAllActiveAdminsResponse();
 
-		//Payments
-		public async Task<GetAllPaymentsResponse> GetAllPaymentsAction(string requestQuery)
+                httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+                httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+                using (var response = await httpClient.GetAsync(requestQuery))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (!string.IsNullOrEmpty(apiResponse))
+                    {
+                        var convert = JsonConvert.DeserializeObject<GetAllActiveAdminsResponse>(apiResponse);
+
+                        if (convert != null)
+                        {
+                            _getAllActiveAdminsRespponse = convert;
+
+                            _session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+                            _session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+                        }
+                    }
+                }
+
+                return _getAllActiveAdminsRespponse;
+            }
+        }
+        public async Task<GetAllActiveUsersResponse> GetAllActiveUsersAction(string requestQuery)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                GetAllActiveUsersResponse _getAllActiveUsersRespponse = new GetAllActiveUsersResponse();
+
+                httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+                httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+                using (var response = await httpClient.GetAsync(requestQuery))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (!string.IsNullOrEmpty(apiResponse))
+                    {
+                        var convert = JsonConvert.DeserializeObject<GetAllActiveUsersResponse>(apiResponse);
+
+                        if (convert != null)
+                        {
+                            _getAllActiveUsersRespponse = convert;
+
+                            _session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+                            _session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+                        }
+                    }
+                }
+
+                return _getAllActiveUsersRespponse;
+            }
+        }
+
+        //Payments
+        public async Task<GetAllPaymentsResponse> GetAllPaymentsAction(string requestQuery)
 		{
 			using (var httpClient = new HttpClient())
 			{
