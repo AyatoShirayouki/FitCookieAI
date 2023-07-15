@@ -57,6 +57,8 @@
         if (formSelector === '#noAccount') {
             var password = $('#password');
             var confirmPassword = $('#confirmPassword');
+            var termsAndConditionsCheckbox = $('#TermsAndConditionsCheckbox');
+
             if (password.val() !== confirmPassword.val()) {
                 isValid = false;
                 if (password.val().length > 0 && confirmPassword.val().length > 0) {
@@ -65,10 +67,19 @@
             } else {
                 $('#confirmPassword-validation').text('');
             }
+
+            // Check if the terms and conditions checkbox is checked
+            if (!termsAndConditionsCheckbox.is(':checked')) {
+                isValid = false;
+                $('#terms-validation').text('You must agree to the terms and conditions.');
+            } else {
+                $('#terms-validation').text('');
+            }
         }
 
         $(buttonSelector).prop('disabled', !isValid);
     }
+
 
     $('#btn-sign-up').hide();
 
@@ -92,7 +103,7 @@
         validateForm('#noAccount', '#btn-sign-up');
     });
 
-    $('#hasAccount input[required], #noAccount input[required]').on('input', function () {
+    $('#hasAccount input[required], #noAccount input[required], #TermsAndConditionsCheckbox').on('input change', function () {
         validateForm('#hasAccount', '#btn-login');
         validateForm('#noAccount', '#btn-sign-up');
     });
@@ -171,3 +182,37 @@
 
     ////////////////////////////////////////// Form validations /////////////////////////////////////////
 });
+
+window.onload = function () {
+    ////////////////////////////////////////// Terms and Conditions Modal ///////////////////////////////
+
+    // Get the modal
+    var modal = document.getElementById("termsAndConditionsModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // Alternatively, you can use a function to show the modal
+    function showModal() {
+        modal.style.display = "block";
+    }
+
+    ////////////////////////////////////////// Terms and Conditions Modal ///////////////////////////////
+
+    ////////////////////////////////////////// Terms and conditions link ////////////////////////////////
+    // Get the link
+    var link = document.getElementById("terms_and_conditions_link");
+
+    // When the user clicks the link, open the modal 
+    link.onclick = function (e) {
+        e.preventDefault(); // prevent the default action
+        showModal();
+    }
+
+    ////////////////////////////////////////// Terms and conditions link ////////////////////////////////
+};
