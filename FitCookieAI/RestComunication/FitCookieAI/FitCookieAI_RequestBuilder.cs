@@ -80,8 +80,26 @@
             return uri + _router.PaymentPlansToUsers_GetById + $"id={id}";
         }
 
-        //Users
-        public string LoginRequestBuilder(string uri, string email, string password)
+		//PasswordRecoveryTokens
+		public string DeletePasswordRecoveryTokensByIdRequestBuilder(string uri, int id)
+		{
+			return uri + _router.PasswordRecoveryTokens_Delete + $"id={id}";
+		}
+		public string GetAllPasswordRecoveryTokensRequestBuilder(string uri)
+		{
+			return uri + _router.PasswordRecoveryTokens_GetAll;
+		}
+		public string SavePasswordRecoveryTokensRequestBuilder(string uri)
+		{
+			return uri + _router.PasswordRecoveryTokens_Save;
+		}
+		public string GetPasswordRecoveryTokensByIdRequestBuilder(string uri, int id)
+		{
+			return uri + _router.PasswordRecoveryTokens_GetById + $"id={id}";
+		}
+
+		//Users
+		public string LoginRequestBuilder(string uri, string email, string password)
         {
             return uri + _router.Users_Login + $"email={email}&password={password}";
         }

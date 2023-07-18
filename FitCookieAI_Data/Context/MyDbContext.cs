@@ -26,6 +26,7 @@ namespace FitCookieAI_Data.Context
 		public DbSet<PaymentPlanToUser> PaymentPlansToUsers { get; set; }
 		public DbSet<RefreshUserToken> RefreshUserTokens { get; set; }
         public DbSet<RefreshAdminToken> RefreshAdminTokens { get; set; }
+		public DbSet<PasswordRecoveryToken> PasswordRecoveryTokens { get; set; }
 
         public MyDbContext()
 		{
@@ -38,6 +39,7 @@ namespace FitCookieAI_Data.Context
 			PaymentPlansToUsers = this.Set<PaymentPlanToUser>();
 			RefreshAdminTokens = this.Set<RefreshAdminToken>();
 			RefreshUserTokens = this.Set<RefreshUserToken>();
+			PasswordRecoveryTokens = this.Set<PasswordRecoveryToken>();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

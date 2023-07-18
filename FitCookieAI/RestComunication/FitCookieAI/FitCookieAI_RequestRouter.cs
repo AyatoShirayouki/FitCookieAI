@@ -27,8 +27,14 @@
         public string PaymentPlansToUsers_Save = "/api/PaymentPlansToUsers/Save";
         public string PaymentPlansToUsers_Delete = "/api/PaymentPlansToUsers/Delete?";
 
-        //Users
-        public string Users_SignUp = "/api/Users/SignUp";
+		//PasswordRecoveryTokens
+		public string PasswordRecoveryTokens_GetAll = "/api/PasswordRecoveryTokens/GetAll";
+		public string PasswordRecoveryTokens_GetById = "/api/PasswordRecoveryTokens/GetById?";
+		public string PasswordRecoveryTokens_Save = "/api/PasswordRecoveryTokens/Save";
+		public string PasswordRecoveryTokens_Delete = "/api/PasswordRecoveryTokens/Delete?";
+
+		//Users
+		public string Users_SignUp = "/api/Users/SignUp";
         public string Users_Login = "/api/Users/Login?";
         public string Users_Logout = "/api/Users/Logout?";
         public string Users_GetAll = "/api/Users/GetAll";

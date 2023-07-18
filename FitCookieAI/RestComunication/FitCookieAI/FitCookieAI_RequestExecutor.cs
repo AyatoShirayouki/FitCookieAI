@@ -1,4 +1,5 @@
-﻿using FitCookieAI.RestComunication.FitCookieAI.Responses.PaymentRelated.Payments;
+﻿using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
+using FitCookieAI.RestComunication.FitCookieAI.Responses.PaymentRelated.Payments;
 using FitCookieAI.RestComunication.FitCookieAI.Responses.UserRelated;
 using FitCookieAI_ApplicationService.DTOs.Others;
 using FitCookieAI_ApplicationService.DTOs.UserRelated;
@@ -145,6 +146,137 @@ namespace FitCookieAI.RestComunication.FitCookieAI
                 return _updateUserResponse;
             }
         }
+
+		//Payments
+		public async Task<GetAllPasswordRecoveryTokensResponse> GetAllPasswordRecoveryTokensAction(string requestQuery)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				GetAllPasswordRecoveryTokensResponse _getAllPasswordRecoveryTokensRespponse = new GetAllPasswordRecoveryTokensResponse();
+
+				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+				using (var response = await httpClient.GetAsync(requestQuery))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
+
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<GetAllPasswordRecoveryTokensResponse>(apiResponse);
+
+						if (convert != null)
+						{
+							_getAllPasswordRecoveryTokensRespponse = convert;
+
+							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+						}
+					}
+				}
+
+				return _getAllPasswordRecoveryTokensRespponse;
+			}
+		}
+		public async Task<DeletePasswordRecoveryTokensResponse> DeletePasswordRecoveryTokensAction(string requestQuery)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				DeletePasswordRecoveryTokensResponse _deletePasswordRecoveryTokensResponse = new DeletePasswordRecoveryTokensResponse();
+
+				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+				using (var response = await httpClient.DeleteAsync(requestQuery))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
+
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<DeletePasswordRecoveryTokensResponse>(apiResponse);
+
+						if (convert != null)
+						{
+							_deletePasswordRecoveryTokensResponse = convert;
+
+							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+						}
+					}
+				}
+
+				return _deletePasswordRecoveryTokensResponse;
+			}
+		}
+		public async Task<SavePasswordRecoveryTokensResponse> SavePasswordRecoveryTokensAction(PaymentDTO request, string requestQuery)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				SavePasswordRecoveryTokensResponse _savePasswordRecoveryTokensResponse = new SavePasswordRecoveryTokensResponse();
+
+				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+				httpClient.BaseAddress = new Uri(requestQuery);
+				httpClient.DefaultRequestHeaders.Accept.Clear();
+				httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var content = JsonConvert.SerializeObject(request);
+				var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+				var byteContent = new ByteArrayContent(buffer);
+				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+				using (var response = await httpClient.PostAsync("", byteContent))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
+
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<SavePasswordRecoveryTokensResponse>(apiResponse);
+
+						if (convert != null)
+						{
+							_savePasswordRecoveryTokensResponse = convert;
+
+							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+						}
+					}
+				}
+
+				return _savePasswordRecoveryTokensResponse;
+			}
+		}
+		public async Task<GetPasswordRecoveryTokensByIdResponse> GetPasswordRecoveryTokensByIdAction(string requestQuery)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				GetPasswordRecoveryTokensByIdResponse _getPasswordRecoveryTokensByIdResponse = new GetPasswordRecoveryTokensByIdResponse();
+
+				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+				using (var response = await httpClient.GetAsync(requestQuery))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
+
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<GetPasswordRecoveryTokensByIdResponse>(apiResponse);
+
+						if (convert != null)
+						{
+							_getPasswordRecoveryTokensByIdResponse = convert;
+
+							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+						}
+					}
+				}
+
+				return _getPasswordRecoveryTokensByIdResponse;
+			}
+		}
 
 		//Payments
 		public async Task<ChargePaymentResponse> ChargePaymentsAction(PaymentDTO request, string requestQuery)

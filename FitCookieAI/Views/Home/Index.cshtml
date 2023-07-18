@@ -1,6 +1,7 @@
 ﻿@model FitCookieAI.Models.SubmitInputVM
 @{
     ViewData["Title"] = "Home";
+	Layout = "_Layout";
 }
 
 <p class="text-center mb-4">Hello! I'm here to help you with your nutrition needs. To get started, please provide some information about yourself.</p>
@@ -168,7 +169,7 @@
 									<h3 id="user-names"></h3>
 								</center>
 								<center>
-									<h4>Your diet plan is being generated!</h4>
+									<h4>Click Generate to gey your diet plan!</h4>
 								</center>
 							</div>
 						</div>
@@ -222,6 +223,11 @@
 									</div>
 									<small class="required">required</small>
 									<span id="password-validation" class="error"></span>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-floating">
+										<a href="/Home/RestorePassword">Forgot your password?</a>
+									</div>
 								</div>
 							</div>
 							<div id="login-authentication-error" class="row">
@@ -335,7 +341,7 @@
 										<h3 id="user-names"></h3>
 									</center>
 									<center>
-										<h4>Your diet plan is being generated!</h4>
+										<h4>Click Generate to gey your diet plan!</h4>
 									</center>
 								</div>
 							</div>

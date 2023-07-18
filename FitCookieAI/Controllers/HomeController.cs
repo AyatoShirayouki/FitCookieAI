@@ -15,7 +15,8 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Mail;
 using static FitCookieAI.Test.BaseGPTTestRequest;
-using static Org.BouncyCastle.Math.EC.ECCurve;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace FitCookieAI.Controllers
 {
@@ -234,6 +235,39 @@ namespace FitCookieAI.Controllers
 			else
 			{
 				return Json(new {status = 400, response = new {message = "Input data was invalid!" } });
+			}
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> RestorePassword()
+		{
+            CheckEmailRestorePasswordVM model = new CheckEmailRestorePasswordVM();
+
+            return View(model);
+		}
+
+		[HttpPost]
+        public async Task<IActionResult> RestorePassword(CheckEmailRestorePasswordVM model)
+        {
+            return View();
+        }
+
+        public async Task SendEmailAsync(string email, string subject, string message)
+		{
+			var emailMessage = new MimeMessage();
+
+			emailMessage.From.Add(new MailboxAddress("FitCookieAI team", "fitcookieai@gmail.com"));
+			emailMessage.To.Add(new MailboxAddress("", email));
+			emailMessage.Subject = subject;
+			emailMessage.Body = new TextPart("html") { Text = message };
+
+			using (var client = new MailKit.Net.Smtp.SmtpClient())
+			{
+				await client.ConnectAsync("smtp.mandrillapp.com", 587, false); //replace with your server settings
+				await client.AuthenticateAsync("FitCookieAI", "md-YisnIqeSRFTYYGGE7cCRlg"); //replace with your username and password
+				await client.SendAsync(emailMessage);
+
+				await client.DisconnectAsync(true);
 			}
 		}
 
