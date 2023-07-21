@@ -122,6 +122,32 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 			}
 		}
 
+		public static async Task DeleteExpiredTokens()
+		{
+            using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
+            {
+                unitOfWork.BeginTransaction();
+
+                PasswordRecoveryTokensRepository passwordRecoveryTokensRepo = new PasswordRecoveryTokensRepository(unitOfWork);
+
+                List<PasswordRecoveryToken> PasswordRecoveryTokens = await passwordRecoveryTokensRepo.GetAll(t => t.End < DateTime.Now);
+
+                if (PasswordRecoveryTokens != null)
+                {
+					foreach (var token in PasswordRecoveryTokens)
+					{
+                        await passwordRecoveryTokensRepo.Delete(token);
+                    }
+                   
+                    unitOfWork.Commit();
+                }
+                else
+                {
+                    unitOfWork.Rollback();
+                }
+            }
+        }
+
 		public static async Task Delete(int id)
 		{
 			using (MyUnitOfWork unitOfWork = new MyUnitOfWork())

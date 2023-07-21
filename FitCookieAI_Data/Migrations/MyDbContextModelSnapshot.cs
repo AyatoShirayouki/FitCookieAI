@@ -74,12 +74,12 @@ namespace FitCookieAI_Data.Migrations
                         new
                         {
                             Id = 1,
-                            DOB = new DateTime(2023, 7, 12, 22, 25, 48, 775, DateTimeKind.Local).AddTicks(7728),
+                            DOB = new DateTime(2023, 7, 19, 1, 11, 25, 67, DateTimeKind.Local).AddTicks(8756),
                             Email = "admin@mail.com",
                             FirstName = "Admin",
                             Gender = "Male",
                             LastName = "User",
-                            Password = "+bhktk3BS/YhlZo50mtKhk525PiG8t7c7V/Cef+L+0zgOo3wLQLMyphJjvCelNOy",
+                            Password = "Q/ZgR25RKAN9RIbYMcIgG6YqAdeF+KG61cXBJBVDyd/EBnTpd9vb4ueouGYEO/WU",
                             ProfilePhotoName = "",
                             StatusId = 1
                         });
@@ -267,6 +267,35 @@ namespace FitCookieAI_Data.Migrations
                     b.ToTable("PaymentPlansToUsers");
                 });
 
+            modelBuilder.Entity("FitCookieAI_Data.Entities.UserRelated.PasswordRecoveryToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordRecoveryTokens");
+                });
+
             modelBuilder.Entity("FitCookieAI_Data.Entities.UserRelated.RefreshUserToken", b =>
                 {
                     b.Property<int>("Id")
@@ -411,6 +440,17 @@ namespace FitCookieAI_Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ParentPaymentPlan");
+
+                    b.Navigation("ParentUser");
+                });
+
+            modelBuilder.Entity("FitCookieAI_Data.Entities.UserRelated.PasswordRecoveryToken", b =>
+                {
+                    b.HasOne("FitCookieAI_Data.Entities.UserRelated.User", "ParentUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ParentUser");
                 });

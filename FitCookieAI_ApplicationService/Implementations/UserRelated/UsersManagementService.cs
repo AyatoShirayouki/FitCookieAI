@@ -53,7 +53,7 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 			}
 		}
 
-		public static async Task<UserDTO> GetById(int id)
+        public static async Task<UserDTO> GetById(int id)
 		{
 			using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
 			{
@@ -157,7 +157,27 @@ namespace FitCookieAI_ApplicationService.Implementations.UserRelated
 			}
 		}
 
-		public static async Task Delete(int id)
+        public static async Task<int> GetUserIdByEmail(string email)
+        {
+			int result = 0;
+
+            using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
+            {
+                unitOfWork.BeginTransaction();
+                UsersRepository UsersRepo = new UsersRepository();
+                User User = await UsersRepo.GetFirstOrDefault(u => u.Email == email);
+
+                if (User != null)
+                {
+                    result = User.Id;
+                }
+
+                unitOfWork.Commit();
+                return result;
+            }
+        }
+
+        public static async Task Delete(int id)
 		{
 			using (MyUnitOfWork unitOfWork = new MyUnitOfWork())
 			{

@@ -146,16 +146,61 @@ namespace FitCookieAI.RestComunication.FitCookieAI
                 return _updateUserResponse;
             }
         }
+        public async Task<VerifyUserByEmailResponse> VerifyUserByEmailAction(string requestQuery)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                VerifyUserByEmailResponse _verifyUserByEmailResponse = new VerifyUserByEmailResponse();
 
-		//Payments
-		public async Task<GetAllPasswordRecoveryTokensResponse> GetAllPasswordRecoveryTokensAction(string requestQuery)
+                using (var response = await httpClient.GetAsync(requestQuery))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (!string.IsNullOrEmpty(apiResponse))
+                    {
+                        var convert = JsonConvert.DeserializeObject<VerifyUserByEmailResponse>(apiResponse);
+
+                        if (convert != null)
+                        {
+                            _verifyUserByEmailResponse = convert;
+                        }
+                    }
+                }
+
+                return _verifyUserByEmailResponse;
+            }
+        }
+        public async Task<EditUserPasswordResponse> EditUserPasswordAction(string requestQuery)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                EditUserPasswordResponse _editUserPasswordResponse = new EditUserPasswordResponse();
+
+                using (var response = await httpClient.GetAsync(requestQuery))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (!string.IsNullOrEmpty(apiResponse))
+                    {
+                        var convert = JsonConvert.DeserializeObject<EditUserPasswordResponse>(apiResponse);
+
+                        if (convert != null)
+                        {
+                            _editUserPasswordResponse = convert;
+                        }
+                    }
+                }
+                return _editUserPasswordResponse;
+            }
+        }
+
+
+        //PasswordRecoveryTokens
+        public async Task<GetAllPasswordRecoveryTokensResponse> GetAllPasswordRecoveryTokensAction(string requestQuery)
 		{
 			using (var httpClient = new HttpClient())
 			{
 				GetAllPasswordRecoveryTokensResponse _getAllPasswordRecoveryTokensRespponse = new GetAllPasswordRecoveryTokensResponse();
-
-				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
-				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
 
 				using (var response = await httpClient.GetAsync(requestQuery))
 				{
@@ -168,9 +213,6 @@ namespace FitCookieAI.RestComunication.FitCookieAI
 						if (convert != null)
 						{
 							_getAllPasswordRecoveryTokensRespponse = convert;
-
-							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
-							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
 						}
 					}
 				}
@@ -178,6 +220,7 @@ namespace FitCookieAI.RestComunication.FitCookieAI
 				return _getAllPasswordRecoveryTokensRespponse;
 			}
 		}
+
 		public async Task<DeletePasswordRecoveryTokensResponse> DeletePasswordRecoveryTokensAction(string requestQuery)
 		{
 			using (var httpClient = new HttpClient())
@@ -208,46 +251,42 @@ namespace FitCookieAI.RestComunication.FitCookieAI
 				return _deletePasswordRecoveryTokensResponse;
 			}
 		}
-		public async Task<SavePasswordRecoveryTokensResponse> SavePasswordRecoveryTokensAction(PaymentDTO request, string requestQuery)
-		{
-			using (var httpClient = new HttpClient())
-			{
-				SavePasswordRecoveryTokensResponse _savePasswordRecoveryTokensResponse = new SavePasswordRecoveryTokensResponse();
 
-				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
-				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+        public async Task<SavePasswordRecoveryTokensResponse> SavePasswordRecoveryTokensAction(PasswordRecoveryTokenDTO request, string requestQuery)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                SavePasswordRecoveryTokensResponse _savePasswordRecoveryTokensResponse = new SavePasswordRecoveryTokensResponse();
 
-				httpClient.BaseAddress = new Uri(requestQuery);
-				httpClient.DefaultRequestHeaders.Accept.Clear();
-				httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-				var content = JsonConvert.SerializeObject(request);
-				var buffer = System.Text.Encoding.UTF8.GetBytes(content);
-				var byteContent = new ByteArrayContent(buffer);
-				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpClient.BaseAddress = new Uri(requestQuery);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-				using (var response = await httpClient.PostAsync("", byteContent))
-				{
-					string apiResponse = await response.Content.ReadAsStringAsync();
+                var content = JsonConvert.SerializeObject(request);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-					if (!string.IsNullOrEmpty(apiResponse))
-					{
-						var convert = JsonConvert.DeserializeObject<SavePasswordRecoveryTokensResponse>(apiResponse);
+                using (var response = await httpClient.PostAsync("", byteContent))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
 
-						if (convert != null)
-						{
-							_savePasswordRecoveryTokensResponse = convert;
+                    if (!string.IsNullOrEmpty(apiResponse))
+                    {
+                        var convert = JsonConvert.DeserializeObject<SavePasswordRecoveryTokensResponse>(apiResponse);
 
-							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
-							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
-						}
-					}
-				}
+                        if (convert != null)
+                        {
+                            _savePasswordRecoveryTokensResponse = convert;
+                        }
+                    }
+                }
+                return _savePasswordRecoveryTokensResponse;
+            }
+        }
 
-				return _savePasswordRecoveryTokensResponse;
-			}
-		}
-		public async Task<GetPasswordRecoveryTokensByIdResponse> GetPasswordRecoveryTokensByIdAction(string requestQuery)
+        public async Task<GetPasswordRecoveryTokensByIdResponse> GetPasswordRecoveryTokensByIdAction(string requestQuery)
 		{
 			using (var httpClient = new HttpClient())
 			{

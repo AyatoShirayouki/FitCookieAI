@@ -15,8 +15,11 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Mail;
 using static FitCookieAI.Test.BaseGPTTestRequest;
-using MailKit.Net.Smtp;
-using MimeKit;
+using System;
+using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
+using System.Net;
+using System.Text.RegularExpressions;
+using FitCookieAI_Data.Migrations;
 
 namespace FitCookieAI.Controllers
 {
@@ -37,6 +40,10 @@ namespace FitCookieAI.Controllers
 		private FitCookieAI_RequestBuilder _fitCookieAIRequestBuilder;
 		private FitCookieAI_RequestExecutor _fitCookieAIRequestExecutor;
 		private ChargePaymentResponse _chargePaymentResponse;
+		private VerifyUserByEmailResponse _verifyUserByEmailResponse;
+		private SavePasswordRecoveryTokensResponse _savePasswordRecoveryTokensResponse;
+		private GetAllPasswordRecoveryTokensResponse _getAllPasswordRecoveryTokensResponse;
+		private EditUserPasswordResponse _editUserPasswordResponse;
 
 		string baseGPTUri;
 		string baseFitcookieAIUri;
@@ -45,7 +52,10 @@ namespace FitCookieAI.Controllers
 		private IConfiguration _configuration;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IConfiguration config)
+        private static readonly Random random = new Random();
+        private const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IConfiguration config)
 		{
 			_configuration = configuration;
 			_httpContextAccessor = httpContextAccessor;
@@ -61,6 +71,10 @@ namespace FitCookieAI.Controllers
 			_signUpUserResponse	= new SignUpUserResponse();
 			_logoutUserResponse= new LogoutUserResponse();
 			_chargePaymentResponse = new ChargePaymentResponse();
+			_verifyUserByEmailResponse = new VerifyUserByEmailResponse();
+			_savePasswordRecoveryTokensResponse = new SavePasswordRecoveryTokensResponse();
+			_getAllPasswordRecoveryTokensResponse = new GetAllPasswordRecoveryTokensResponse();
+			_editUserPasswordResponse = new EditUserPasswordResponse();
 
 			_config= config;
 			_service = new GPT_Test_Service(_config);
@@ -101,7 +115,10 @@ namespace FitCookieAI.Controllers
 
 		public async Task<JsonResult> SignUp(SignUpVM model)
 		{
-			if (!ModelState.IsValid)
+            string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+            Regex regex = new Regex(pattern);
+
+            if (!ModelState.IsValid)
 			{
 				return Json(new { code = 400, message = "SignUp input is invalid (missing data)!" });
 			}
@@ -109,8 +126,12 @@ namespace FitCookieAI.Controllers
 			{
 				return Json(new { code = 400, message = "SignUp input is invalid (password != confirm pasword)!" });
 			}
+            if (!regex.IsMatch(model.Password) || model.Password.Length < 8 || model.Password.Length > 20)
+            {
+                return Json(new { code = 400, message = "SignUp input is invalid Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters!" });
+            }
 
-			UserDTO user = new UserDTO
+            UserDTO user = new UserDTO
 			{
 				Email= model.Email,
 				FirstName= model.FirstName,
@@ -238,7 +259,113 @@ namespace FitCookieAI.Controllers
 			}
 		}
 
-		[HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> RestorePasswordStep3()
+        {
+			if (this.HttpContext.Session.GetInt32("PasswordRecoveryTokenId") == null || this.HttpContext.Session.GetInt32("PasswordRecoveryTokenId") == 0)
+			{
+                return RedirectToAction("RestorePasswordStep2", "Home");
+            }
+
+            EditPasswordRestorePasswordVM model = new EditPasswordRestorePasswordVM();
+
+            return View(model);
+        }
+
+		[HttpPost]
+        public async Task<IActionResult> RestorePasswordStep3(EditPasswordRestorePasswordVM model)
+		{
+            if (this.HttpContext.Session.GetInt32("PasswordRecoveryTokenId") == null || this.HttpContext.Session.GetInt32("PasswordRecoveryTokenId") == 0)
+            {
+                return RedirectToAction("RestorePasswordStep2", "Home");
+            }
+
+            string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+            Regex regex = new Regex(pattern);
+
+            if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			if (model.Password != model.ConfirmPassword)
+			{
+                ModelState.AddModelError("Password-error", "Password has to match Confirm Password!");
+                return View(model);
+            }
+
+			if (!regex.IsMatch(model.Password) || model.Password.Length < 8 || model.Password.Length > 20)
+			{
+                ModelState.AddModelError("Password-error", "Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+                return View(model);
+            }
+
+			_editUserPasswordResponse = await _fitCookieAIRequestExecutor.EditUserPasswordAction(
+				_fitCookieAIRequestBuilder.EditUserPasswordRequestBuilder(
+					baseFitcookieAIUri, model.Password, (int)this.HttpContext.Session.GetInt32("PasswordRecoveryTokenId")));
+
+			if (_editUserPasswordResponse.Code != null && int.Parse(_editUserPasswordResponse.Code.ToString()) == 201)
+			{
+                this.HttpContext.Session.Remove("PasswordRecoveryTokenId");
+				return RedirectToAction("Index", "Home");
+            }
+			else
+			{
+                ModelState.AddModelError("Password-error", "Something went wrong, server is nor responding!");
+                return View(model);
+            }
+		}
+
+        [HttpGet]
+        public async Task<IActionResult> RestorePasswordStep2()
+        {
+            CheckCodeRestorePasswordVM model = new CheckCodeRestorePasswordVM();
+
+            return View(model);
+        }
+
+		[HttpPost]
+        public async Task<IActionResult> RestorePasswordStep2(CheckCodeRestorePasswordVM model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			_getAllPasswordRecoveryTokensResponse = await _fitCookieAIRequestExecutor.GetAllPasswordRecoveryTokensAction(
+				_fitCookieAIRequestBuilder.GetAllPasswordRecoveryTokensRequestBuilder(baseFitcookieAIUri));
+
+			if (_getAllPasswordRecoveryTokensResponse.Code != null && int.Parse(_getAllPasswordRecoveryTokensResponse.Code.ToString()) == 201)
+			{
+				PasswordRecoveryTokenDTO token = _getAllPasswordRecoveryTokensResponse.Body.Where(t => t.Code == model.Code).FirstOrDefault();
+
+				if (token == null)
+				{
+                    ModelState.AddModelError("Code-error", "The code you've entered is incorrect or doesn't exist!");
+                    return View(model);
+                }
+				else
+				{
+					if (DateTime.Now > token.Start && DateTime.Now < token.End)
+					{
+						this.HttpContext.Session.SetInt32("PasswordRecoveryTokenId", token.Id);
+                        return RedirectToAction("RestorePasswordStep3", "Home");
+                    }
+					else
+					{
+                        ModelState.AddModelError("Code-error", "The code you've entered is expired!");
+                        return View(model);
+					}
+				}
+			}
+			else
+			{
+                ModelState.AddModelError("Code-error", "Something went wrong, server is nor responding!");
+                return View(model);
+			}
+		}
+
+        [HttpGet]
 		public async Task<IActionResult> RestorePassword()
 		{
             CheckEmailRestorePasswordVM model = new CheckEmailRestorePasswordVM();
@@ -249,29 +376,102 @@ namespace FitCookieAI.Controllers
 		[HttpPost]
         public async Task<IActionResult> RestorePassword(CheckEmailRestorePasswordVM model)
         {
-            return View();
+			if (!ModelState.IsValid)
+			{
+                return View(model);
+            }
+
+			_verifyUserByEmailResponse = await _fitCookieAIRequestExecutor.VerifyUserByEmailAction(
+				_fitCookieAIRequestBuilder.VerifyUserByEmailRequestBuilder(baseFitcookieAIUri, model.Email));
+
+			if (_verifyUserByEmailResponse.Code != null && int.Parse(_verifyUserByEmailResponse.Code.ToString()) == 201)
+			{
+				string code = GeneratePasswordRecoveryCode(5);
+
+				PasswordRecoveryTokenDTO token = new PasswordRecoveryTokenDTO
+				{
+					Code = code,
+					UserId = int.Parse(_verifyUserByEmailResponse.Body)
+				};
+
+				_savePasswordRecoveryTokensResponse = await _fitCookieAIRequestExecutor.SavePasswordRecoveryTokensAction(token,
+					_fitCookieAIRequestBuilder.SavePasswordRecoveryTokensRequestBuilder(baseFitcookieAIUri));
+
+				if (_savePasswordRecoveryTokensResponse.Code != null && int.Parse(_savePasswordRecoveryTokensResponse.Code.ToString()) == 201)
+				{
+                    await SendEmailAsync(model.Email, "FitCookieAI Password restore.", $"Your recovery code is: {code}");
+
+                    return RedirectToAction("RestorePasswordStep2", "Home");
+                }
+				else
+				{
+                    ModelState.AddModelError("Email-error", "Something went wrong, your password recovery code cannot be sent!");
+                    return View(model);
+				}
+            }
+			else
+			{
+                ModelState.AddModelError("Email-error", "Something went wrong, server is nor responding!");
+                return View(model);
+            }
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public static async Task<string> SendEmailAsync(string email, string subject, string messageContent)
 		{
-			var emailMessage = new MimeMessage();
+            string user = "fitcookieai@gmail.com";
+            string pass = "ivleaifvsclnwbxe";
+            string smtpServer = "smtp.gmail.com";
 
-			emailMessage.From.Add(new MailboxAddress("FitCookieAI team", "fitcookieai@gmail.com"));
-			emailMessage.To.Add(new MailboxAddress("", email));
-			emailMessage.Subject = subject;
-			emailMessage.Body = new TextPart("html") { Text = message };
+            bool ssl = true;
 
-			using (var client = new MailKit.Net.Smtp.SmtpClient())
-			{
-				await client.ConnectAsync("smtp.mandrillapp.com", 587, false); //replace with your server settings
-				await client.AuthenticateAsync("FitCookieAI", "md-YisnIqeSRFTYYGGE7cCRlg"); //replace with your username and password
-				await client.SendAsync(emailMessage);
+            SmtpClient smtpClient = new SmtpClient();
+            NetworkCredential basicCredential = new NetworkCredential(user, pass);
+            MailMessage message = new MailMessage();
+            MailAddress fromAddress = new MailAddress(user);
+            smtpClient.Host = smtpServer;
+            if (ssl)
+            {
+                smtpClient.EnableSsl = true;
+                smtpClient.Port = 587;
+            }
+            else
+            {
+                smtpClient.Port = 26;
+            }
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = basicCredential;
 
-				await client.DisconnectAsync(true);
-			}
-		}
+            message.From = fromAddress;
+            message.Subject = subject;
+            //Set IsBodyHtml to true means you can send HTML email.
+            /*
+            message.IsBodyHtml = true;
+            message.Body = "<h1>Hello, this is a demo ... ..</h1>";
+            */
+            message.IsBodyHtml = false;
+            message.Body = messageContent;
 
-		public IActionResult Privacy()
+            message.To.Add(email);
+
+            try
+            {
+                smtpClient.Send(message);
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                //Error, could not send the message
+                return ex.ToString();
+            }
+        }
+
+        public static string GeneratePasswordRecoveryCode(int length)
+        {
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public IActionResult Privacy()
 		{
 			return View();
 		}

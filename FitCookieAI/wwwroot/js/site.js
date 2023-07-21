@@ -13,7 +13,7 @@
     }
 
     function validatePassword(password) {
-        return password.length >= 6;
+        return password.length >= 8;
     }
 
     function validateNotEmpty(value) {
@@ -181,6 +181,56 @@
     });
 
     ////////////////////////////////////////// Form validations /////////////////////////////////////////
+
+    //--------------------------------------------- Download the PDF file when the button is clicked - start -----------------------------------------
+    $("#download-btn").click(function () {
+        var HTML_Width = $("#result-container").find("#pdf-content").width();
+        var HTML_Height = $("#result-container").find("#pdf-content").height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        html2canvas($("#result-container").find("#pdf-content")[0]).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (var i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+            }
+            pdf.save("Your_Diet_Plan.pdf");
+        });
+    });
+    //--------------------------------------------- Download the PDF file when the button is clicked - end -----------------------------------------
+
+    //---------------------------------------------------------- Print diet plan - tart ------------------------------------------------------------
+    $('#print-btn').click(function (e) {
+        e.preventDefault();
+
+        // Create a copy of the target div
+        var $printContent = $('#result-container').clone();
+
+        // Remove the download button from the copied content
+        $printContent.find('#download-btn').remove();
+
+        // Remove the print button from the copied content
+        $printContent.find('#print-btn').remove();
+
+        // Create a new window
+        var printWindow = window.open('', '', 'width=800,height=800');
+
+        // Write the modified HTML to the new window
+        printWindow.document.write('<html><head><title>Diet Plan</title></head><body>');
+        printWindow.document.write($printContent.html());
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    });
+    //---------------------------------------------------------- Print diet plan - end ------------------------------------------------------------
 });
 
 window.onload = function () {

@@ -39,6 +39,8 @@
         public string Users_Logout = "/api/Users/Logout?";
         public string Users_GetAll = "/api/Users/GetAll";
         public string Users_GetById = "/api/Users/GetById?";
+        public string Users_VerifyUserByEmail = "/api/Users/VerifyUserByEmail?";
+        public string Users_EditUserPassword = "/api/Users/EditUserPassword?";
         public string Users_Update = "/api/Users/Update";
         public string Users_Delete = "/api/Users/Delete?";
     }

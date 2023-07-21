@@ -218,7 +218,7 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="password" class="form-control" id="password-login" name="Password" placeholder="Password" required>
+										<input type="password" class="form-control" id="password-login" name="Password" placeholder="Password" minlength="8" maxlength="20" required>
 										<label for="password-login">Password</label>
 									</div>
 									<small class="required">required</small>
@@ -272,7 +272,8 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="password" class="form-control" id="password" name="Password" placeholder="Password" maxlength="30" required>
+										<input type="password" class="form-control" id="password" name="Password"
+											   placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" minlength="8" maxlength="20" required>
 										<label for="password">Password</label>
 									</div>
 									<small class="required">required</small>
@@ -280,7 +281,8 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="form-floating">
-										<input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Confirm Password" maxlength="30" required>
+										<input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword"
+											   placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" minlength="8" maxlength="20" required>
 										<label for="confirmPassword">Confirm Password</label>
 									</div>
 									<small class="required">required</small>

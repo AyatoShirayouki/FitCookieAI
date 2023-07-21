@@ -35,81 +35,40 @@ namespace FitCookieAI_API.Controllers.UserRelated
 
 		[HttpGet]
 		[Route("GetAll")]
-		public async Task<IActionResult> GetAll([FromHeader] string token, [FromHeader] string refreshToken)
+		public async Task<IActionResult> GetAll()
 		{
-			if (token != null && refreshToken != null)
+			List<PasswordRecoveryTokenDTO> tokens = await PasswordRecoveryTokensManagementService.GetAll();
+
+			if (tokens.Count != 0)
 			{
-				tokenRequest.Token = token;
-				tokenRequest.RefreshToken = refreshToken;
-
-				JwtResult jwtAdminToken = await _authentication.RefreshAdminToken(tokenRequest);
-
-				if (jwtAdminToken.JwtSuccess == true)
-				{
-					response.Code = 201;
-
-					response.Body = await PasswordRecoveryTokensManagementService.GetAll();
-
-					HttpContext.Response.Headers.Add("token", jwtAdminToken.Token);
-					HttpContext.Response.Headers.Add("refreshToken", jwtAdminToken.RefreshToken);
-
-					response.JwtSuccess = jwtAdminToken.JwtSuccess;
-					response.JwtErrors = jwtAdminToken.JwtErrors;
-				}
-				else if (jwtAdminToken.JwtSuccess != true)
-				{
-					response.Code = 200;
-
-					response.JwtSuccess = jwtAdminToken.JwtSuccess;
-					response.JwtErrors = jwtAdminToken.JwtErrors;
-				}
-			}
+                response.Code = 201;
+				response.Body = tokens;
+            }
 			else
 			{
-				response.Code = 400;
-				response.Error = "Missing data - Token or refresh token is null or invalid!";
-			}
+                response.Code = 200;
+                response.Error = "No tokens found!";
+            }
+
 			return new JsonResult(response);
 		}
 
 		[HttpPost]
 		[Route("Save")]
-		public async Task<IActionResult> Save(PasswordRecoveryTokenDTO passwordRecoveryTokenDTO, [FromHeader] string token, [FromHeader] string refreshToken)
+		public async Task<IActionResult> Save(PasswordRecoveryTokenDTO passwordRecoveryTokenDTO)
 		{
-			if (passwordRecoveryTokenDTO == null || token == null || refreshToken == null)
+			if (passwordRecoveryTokenDTO == null)
 			{
 				response.Code = 400;
-				response.Error = "Missing data - PaymentPlan and/or token and/or refresh token is null or invalid!";
+				response.Error = "Missing data - PasswordRecoveryToken is null or invalid!";
 
 				return new JsonResult(response);
 			}
 			else
 			{
-				tokenRequest.Token = token;
-				tokenRequest.RefreshToken = refreshToken;
-
-				JwtResult jwtAdminToken = await _authentication.RefreshAdminToken(tokenRequest);
-
-				if (jwtAdminToken.JwtSuccess == true)
-				{
-					response.Code = 201;
-
-					await PasswordRecoveryTokensManagementService.Save(passwordRecoveryTokenDTO);
-					response.Body = "Token has been saved!";
-
-					HttpContext.Response.Headers.Add("token", jwtAdminToken.Token);
-					HttpContext.Response.Headers.Add("refreshToken", jwtAdminToken.RefreshToken);
-
-					response.JwtSuccess = jwtAdminToken.JwtSuccess;
-					response.JwtErrors = jwtAdminToken.JwtErrors;
-				}
-				else if (jwtAdminToken.JwtSuccess != true)
-				{
-					response.Code = 200;
-
-					response.JwtSuccess = jwtAdminToken.JwtSuccess;
-					response.JwtErrors = jwtAdminToken.JwtErrors;
-				}
+				response.Code = 201;
+				await PasswordRecoveryTokensManagementService.Save(passwordRecoveryTokenDTO);
+				response.Body = "Token has been saved!";
 			}
 
 			return new JsonResult(response);

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.RegularExpressions;
 
 namespace FitCookieAI_API.Controllers.UserRelated
 {
@@ -93,6 +94,36 @@ namespace FitCookieAI_API.Controllers.UserRelated
             }
 
             return new JsonResult(response);
+        }
+
+        [HttpGet]
+        [Route("VerifyUserByEmail")]
+        public async Task<IActionResult> VerifyUserByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email)) 
+            {
+                response.Code = 400;
+                response.Error = "Missing data - Email is empty null";
+
+                return new JsonResult(response);
+            }
+            else
+            {
+                bool result = await UsersManagementService.VerifyEmail(email);
+
+                if (result == true) 
+                {
+                    response.Code = 201;
+                    response.Body = await UsersManagementService.GetUserIdByEmail(email);
+                }
+                else
+                {
+                    response.Code = 200;
+                    response.Body = "User doesn't exist!";
+                }
+
+                return new JsonResult(response);
+            }
         }
 
         [HttpGet]
@@ -225,6 +256,52 @@ namespace FitCookieAI_API.Controllers.UserRelated
 
                 response.Code = 201;
                 response.Body = "User has been signed up!";
+            }
+
+            return new JsonResult(response);
+        }
+
+        [HttpGet]
+        [Route("EditUserPassword")]
+        public async Task<IActionResult> EditUserPassword(string password, int tokenId)
+        {
+           
+
+            if (!string.IsNullOrEmpty(password) && tokenId != 0)
+            {
+                PasswordRecoveryTokenDTO token = await PasswordRecoveryTokensManagementService.GetById(tokenId);
+                if (token != null)
+                {
+                    if (DateTime.Now > token.Start && DateTime.Now < token.End)
+                    {
+                        UserDTO user = await UsersManagementService.GetById(token.UserId);
+
+                        if (user != null)
+                        {
+                            user.Password = StringCipher.Encrypt(password, EncriptionVariables.PasswordEncriptionKey);
+                            await UsersManagementService.Save(user);
+                            await PasswordRecoveryTokensManagementService.DeleteExpiredTokens();
+
+                            response.Code = 201;
+                            response.Body = "User password has been updated!";
+                        }
+                        else
+                        {
+                            response.Code = 200;
+                            response.Error = "User not found!";
+                        }
+                    }
+                    else
+                    {
+                        response.Code = 200;
+                        response.Error = "Token not is expired!";
+                    }
+                }
+                else
+                {
+                    response.Code = 400;
+                    response.Error = "Token not found!";
+                }
             }
 
             return new JsonResult(response);

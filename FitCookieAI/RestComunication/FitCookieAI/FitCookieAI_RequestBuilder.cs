@@ -103,6 +103,10 @@
         {
             return uri + _router.Users_Login + $"email={email}&password={password}";
         }
+        public string EditUserPasswordRequestBuilder(string uri, string password, int tokenId)
+        {
+            return uri + _router.Users_EditUserPassword + $"password={password}&tokenId={tokenId}";
+        }
         public string SignUpRequestBuilder(string uri)
         {
             return uri + _router.Users_SignUp;
@@ -115,17 +119,18 @@
         {
             return uri + _router.Users_GetById + $"id={id}";
         }
-
+        public string VerifyUserByEmailRequestBuilder(string uri, string email)
+        {
+            return uri + _router.Users_VerifyUserByEmail + $"email={email}";
+        }
         public string DeleteUsersByIdRequestBuilder(string uri, int id)
         {
             return uri + _router.Users_Delete + $"id={id}";
         }
-
         public string UpdateUsersRequestBuilder(string uri)
         {
             return uri + _router.Users_Update;
         }
-
         public string GetAllUsersRequestBuilder(string uri)
         {
             return uri + _router.Users_GetAll;
