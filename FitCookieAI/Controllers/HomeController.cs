@@ -19,7 +19,6 @@ using System;
 using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
 using System.Net;
 using System.Text.RegularExpressions;
-using FitCookieAI_Data.Migrations;
 
 namespace FitCookieAI.Controllers
 {

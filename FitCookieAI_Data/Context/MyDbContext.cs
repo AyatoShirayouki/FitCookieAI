@@ -13,10 +13,6 @@ namespace FitCookieAI_Data.Context
 {
 	public class MyDbContext : DbContext
 	{
-		public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
-		{
-		}
-
 		public DbSet<User> Users { get; set; }
 		public DbSet<Admin> Admins { get; set; }
 		public DbSet<AdminStatus> AdminStatuses { get; set; }
@@ -82,7 +78,8 @@ namespace FitCookieAI_Data.Context
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Data Source = AKIHIRO\\SQLEXPRESS; TrustServerCertificate = True; initial catalog = FitCookieAIDb; user id = alex; password = rexibexi1");
+			//Data Source = AKIHIRO\\SQLEXPRESS; TrustServerCertificate = True; initial catalog = FitCookieAIDb; user id = alex; password = rexibexi1
+			optionsBuilder.UseNpgsql("User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitVookieAI_db");
 		}
 	}
 }
