@@ -24,7 +24,7 @@ namespace FitCookieAI_Data.Context
         public DbSet<RefreshAdminToken> RefreshAdminTokens { get; set; }
 		public DbSet<PasswordRecoveryToken> PasswordRecoveryTokens { get; set; }
 
-        public MyDbContext()
+		public MyDbContext()
 		{
 			Users = this.Set<User>();
 			Admins = this.Set<Admin>();
@@ -36,6 +36,8 @@ namespace FitCookieAI_Data.Context
 			RefreshAdminTokens = this.Set<RefreshAdminToken>();
 			RefreshUserTokens = this.Set<RefreshUserToken>();
 			PasswordRecoveryTokens = this.Set<PasswordRecoveryToken>();
+
+			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -76,10 +78,12 @@ namespace FitCookieAI_Data.Context
 			});
 		}
 
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			//Data Source = AKIHIRO\\SQLEXPRESS; TrustServerCertificate = True; initial catalog = FitCookieAIDb; user id = alex; password = rexibexi1
-			optionsBuilder.UseNpgsql("User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitVookieAI_db");
+			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+			optionsBuilder.UseNpgsql("User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitCookieAI_db");
 		}
 	}
 }

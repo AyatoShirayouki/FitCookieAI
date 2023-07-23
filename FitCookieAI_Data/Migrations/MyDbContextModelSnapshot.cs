@@ -74,12 +74,12 @@ namespace FitCookieAI_Data.Migrations
                         new
                         {
                             Id = 1,
-                            DOB = new DateTime(2023, 7, 22, 19, 24, 50, 37, DateTimeKind.Local).AddTicks(8736),
+                            DOB = new DateTime(2023, 7, 22, 21, 42, 12, 286, DateTimeKind.Local).AddTicks(7450),
                             Email = "admin@mail.com",
                             FirstName = "Admin",
                             Gender = "Male",
                             LastName = "User",
-                            Password = "Ww07I3swVUun2/NcJBsY4T+EHRqAPPGSmOH8Wfxd0sj4gB4+cdUM0e3K2lXKFhZK",
+                            Password = "BYf7BoueaRGFIr5jXgCXrAaGfLwKMZCUtfP99F8SgtQSIXaVFv8vu/44Fo+LaOQk",
                             ProfilePhotoName = "",
                             StatusId = 1
                         });

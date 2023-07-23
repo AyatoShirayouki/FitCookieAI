@@ -32,6 +32,8 @@ builder.Services.Configure<JwtConfig>(s => s.Secret = EncriptionVariables.JWT_En
 
 var key = Encoding.ASCII.GetBytes(EncriptionVariables.JWT_Encription_Key);
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var tokenValidationParams = new TokenValidationParameters
 {
     ValidateIssuerSigningKey = true,
