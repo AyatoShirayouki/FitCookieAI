@@ -1,0 +1,12 @@
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\bin\Release\net7.0\GlobalVariables.deps.json
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\bin\Release\net7.0\GlobalVariables.dll
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\bin\Release\net7.0\GlobalVariables.pdb
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.csproj.AssemblyReference.cache
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.AssemblyInfoInputs.cache
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.AssemblyInfo.cs
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.csproj.CoreCompileInputs.cache
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.dll
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\refint\GlobalVariables.dll
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\GlobalVariables.pdb
+E:\Projects\FitCookieAIClient-deployment\GlobalVariables\obj\Release\net7.0\ref\GlobalVariables.dll

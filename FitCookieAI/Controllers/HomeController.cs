@@ -19,6 +19,7 @@ using System;
 using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
 using System.Net;
 using System.Text.RegularExpressions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FitCookieAI.Controllers
 {
@@ -90,7 +91,8 @@ namespace FitCookieAI.Controllers
 			return View();
 		}
 
-		public async Task<JsonResult> Login(LoginVM model)
+        [HttpPost]
+        public async Task<JsonResult> Login(LoginVM model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -112,7 +114,8 @@ namespace FitCookieAI.Controllers
 			return Json(new { code = 200, message = "A user with this set of credentials doesn't exist, please check your" });
 		}
 
-		public async Task<JsonResult> SignUp(SignUpVM model)
+        [HttpPost]
+        public async Task<JsonResult> SignUp(SignUpVM model)
 		{
             string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
             Regex regex = new Regex(pattern);
@@ -127,7 +130,7 @@ namespace FitCookieAI.Controllers
 			}
             if (!regex.IsMatch(model.Password) || model.Password.Length < 8 || model.Password.Length > 20)
             {
-                return Json(new { code = 400, message = "SignUp input is invalid Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters!" });
+                return Json(new { code = 400, message = "SignUp input is invalid password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters!" });
             }
 
             UserDTO user = new UserDTO
@@ -163,13 +166,21 @@ namespace FitCookieAI.Controllers
 			return Json(new { code = 200, message = "SignUp failed!" });
 		}
 
-		public async Task<JsonResult> SubmitInput(SubmitInputVM model)
+        [HttpPost]
+        public async Task<JsonResult> SubmitInput(SubmitInputVM model)
 		{
-			if (model.Height != 0 && model.Weight != 0 && model.TargetWeight != 0 && !string.IsNullOrEmpty(model.Ocupation) &&
-				model.BMI != 0 && !string.IsNullOrEmpty(model.HealthGoal) && !string.IsNullOrEmpty(model.ActivityLevel))
+			if (string.IsNullOrEmpty(this.HttpContext.Session.GetString("Email")))
 			{
-				return null;
-			}
+                return Json(new { code = 400, message = "User is not authenticated!" });
+            }
+
+			if (model.Height == 0 || model.Weight == 0 || model.TargetWeight == 0 || string.IsNullOrEmpty(model.Ocupation) ||
+				string.IsNullOrEmpty(model.BMI) || string.IsNullOrEmpty(model.HealthGoal) || string.IsNullOrEmpty(model.ActivityLevel) ||
+                string.IsNullOrEmpty(model.Ocupation) || (!string.IsNullOrEmpty(model.DietaryRestrictions) && model.DietaryRestrictions.Length > 150) 
+				|| (!string.IsNullOrEmpty(model.FoodPreferences) && model.FoodPreferences.Length > 150))
+			{
+				return Json(new { code = 400,  message = "Input data was invalid!" });
+            }
 
 			string dietaryRestrictions = "";
 			string foodPreferences = "";
@@ -185,14 +196,27 @@ namespace FitCookieAI.Controllers
 			TimeSpan age = DateTime.Now.Subtract(model.DOB);
 			int years = (int)(age.TotalDays / 365.25);
 
-			string input = $"As a profesional dietitian recomend me a diet plan with a huge variety of delicious meals meals which must be different for every day of the week, " +
+			/*
+			 * string input1 = $"As a profesional dietitian recomend me a diet plan with a large variety of delicious meals meals which must be different for every day of the week, " +
 				$"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" + 
 				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}. Recomend me a list of suplements (strenght building and health related) which would help me based on my needs in html format as an unordered list" +
 				$"and briefly explain the benefits of each of them." + $" Return the result as a HTML table in html format with colums: day of the week, meals(here you should include the quantity of each part of the meal in grams)" +
 				$", supplements per day (show all the suplements you've suggested above that I should" +
 				$" take in that day and how much of them should I take).";
+			 */
 
-			/*
+			string result = "";
+
+			string input1 = $"As a profesional dietitian recomend me a diet plan with a large variety of delicious meals meals which must be different for every day of the week, " +
+				$"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" +
+				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}. " +
+				$"Return the result as a HTML table in html format with colums: day of the week and meals(here you should include the quantity of each part of the meal in grams)";
+
+			string input2 = $"As a profesional dietitian recomend me a list of supplements, how much of them should i take per day and briefly explain the benefits of each of them, " +
+				$"(strenght building and health related) which would help me based on my needs in html format as a html table with collumns Supplement, Description and Dose per day. " 
+				+ $"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" +
+				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}.";
+            /*
 			BaseGPTTestRequest request = new BaseGPTTestRequest();
 			BaseGPTTestResponse response = new BaseGPTTestResponse();
 
@@ -221,15 +245,17 @@ namespace FitCookieAI.Controllers
 			}
 			*/
 
-			
-			using (var httpClient = new HttpClient())
-			{
-				string requestQuery = _GPTRequestBuilder.PostGPTINputRequestBuilder(baseGPTUri, input);
-				_GPTResponse = await _GPTRequestExecutor.GetGPTResponseAction(httpClient, requestQuery);
-			}
-			
+            string requestQuery = _GPTRequestBuilder.PostGPTINputRequestBuilder(baseGPTUri, input1);
+			_GPTResponse = await _GPTRequestExecutor.GetGPTResponseAction(requestQuery);
 
-			return Json(_GPTResponse.choices[0].text);
+			result += _GPTResponse.choices[0].text + "</br>";
+
+            requestQuery = _GPTRequestBuilder.PostGPTINputRequestBuilder(baseGPTUri, input2);
+            _GPTResponse = await _GPTRequestExecutor.GetGPTResponseAction(requestQuery);
+
+			result += _GPTResponse.choices[0].text;
+
+            return Json(result);
 		}
 
 		[HttpPost]

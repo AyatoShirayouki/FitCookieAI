@@ -1,0 +1,17 @@
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\bin\Release\net7.0\FitCookieAI_Data.deps.json
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\bin\Release\net7.0\FitCookieAI_Data.runtimeconfig.json
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\bin\Release\net7.0\FitCookieAI_Data.dll
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\bin\Release\net7.0\FitCookieAI_Data.pdb
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\bin\Release\net7.0\GlobalVariables.dll
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\bin\Release\net7.0\GlobalVariables.pdb
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.csproj.AssemblyReference.cache
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.AssemblyInfoInputs.cache
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.AssemblyInfo.cs
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.csproj.CoreCompileInputs.cache
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.csproj.CopyComplete
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.dll
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\refint\FitCookieAI_Data.dll
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.pdb
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\FitCookieAI_Data.genruntimeconfig.cache
+E:\Projects\FitCookieAIClient-deployment\FitCookieAI_Data\obj\Release\net7.0\ref\FitCookieAI_Data.dll

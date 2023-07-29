@@ -44,7 +44,7 @@ namespace FitCookieAI.Models
 
 		[Required(ErrorMessage = "This field is required!")]
 		public string HealthGoal { get; set; }
-        public double BMI { get; set; }
+        public string BMI { get; set; }
 		public string? Ocupation { get; set; }
     }
 }

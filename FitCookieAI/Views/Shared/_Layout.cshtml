@@ -29,7 +29,6 @@
 
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
-
     <link href="~/css/SignUp.css" rel="stylesheet">
     
 </head>
@@ -259,35 +258,79 @@
 
     <script id="script" type="text/javascript">
         $(document).ready(function() {
+            rootUrl = '@Url.Content("~")'
+
             // ----------------------------------------------------- Submit input for diet plan - start -------------------------------------------------------
             function submitForm() {
                 $('#loading-container').show();
-                var data = $("#register-account-form").serialize();
+                //$('#result-error-container').show();
+                // Gather the necessary form data
+                var weight = $('#weight').val();
+                var targetWeight = $('#targetWeight').val();
+                var height = $('#height').val();
+                var bmi = $('#BMI').val();
+                var ocupation = $('#ocupation').val();
+                var activityLevel = $('#ActivityLevelList').val();
+                var dietaryRestrictions = $('#DietaryRestrictions').val();
+                var foodPreferences = $('#foodPreferences').val();
+                var healthGoal = $('#HealthGoalsList').val();
+
+                //var data = $("#register-account-form").serialize();
+                var data = {
+                    Height: height,
+                    Weight: weight,
+                    TargetWeight: targetWeight,
+                    BMI: bmi,
+                    Ocupation: ocupation,
+                    HealthGoal: healthGoal,
+                    ActivityLevel: activityLevel,
+                    DietaryRestrictions: dietaryRestrictions,
+                    FoodPreferences: foodPreferences
+                }
+
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SubmitInput',
-                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',  
                     data: data,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     success: function (result) {
-                        $('#result-container').find('#result').html(result);
-                        $('#loading-container').hide();
-                        $("#result-container").show();
+                        if(result.code != null){
+                            $('#loading-container').hide();
+                            $('#result-error-container').find('#result-error-message').html(result.message);
+                            $('#result-error-container').show();
+                            $("#btn-generate").prop("disabled", false);
 
-                        $("#btn-generate").prop("disabled", false);
+                            $("#authentication-options").show();
+                            $("#hasAccount").show();
+                            $("#noAccount").hide();
+                            $("#authenticated").hide();
+                            $("#btn-login").show();
+                            $('#btn-generate').hide();
 
-                        //clear validation errors
-                        $('#age-validation').html('');
-                        $('#height-validation').html('');
-                        $('#weight-validation').html('');
-                        $('#general-validation-error').html('');
+                            $('#btn-logout').css('visibility', 'hidden');
 
-                        console.log(result);
+                            console.log(result);
+                        }
+                        else{
+                            $('#result-container').find('#result').html(result);
+                            $('#loading-container').hide();
+                            $("#result-container").show();
+
+                            $("#btn-generate").prop("disabled", false);
+
+                            //clear validation errors
+                            $('#age-validation').html('');
+                            $('#height-validation').html('');
+                            $('#weight-validation').html('');
+                            $('#general-validation-error').html('');
+                        }
+                        //console.log(result);
                     },
-                    error: function () {
+                    error: function (error_message) {
                         $('#loading-container').hide();
                         $("#btn-generate").prop("disabled", false);
                         alert('Failed to receive the Data');
-                        console.log('Failed ');
+                        console.log('Failed: ' + error_message);
                     }
                 })
             }
@@ -299,6 +342,7 @@
 
                 $(".btn-generate").prop("disabled", true);
                 $("#result-container").hide();
+                $('#result-error-container').hide();
                 submitForm();
             });
             // -------------------------------------------- Generate - end -------------------------------------------
@@ -346,6 +390,7 @@
                             $('#btn-logout').css('visibility', 'hidden');;
                             $('#btn-generate').hide();
                             $('#result-container').hide();
+                            $('#result-error-container').hide();
                             // reset form and clean user input
 
                             console.log('Logged out successfully!');
@@ -430,10 +475,12 @@
                 $("#authentication-options").hide();
                 $("#hasAccount").hide();
                 $("#noAccount").hide();
+                $('#result-error-container').hide();
                 $.ajax({
                     type: 'POST',
                     url: '/Home/Login',
                     data: loginData,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: 'json',
                     success: function (response) {
                         if (response.code === 201) {

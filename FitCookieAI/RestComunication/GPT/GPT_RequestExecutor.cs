@@ -12,26 +12,29 @@ namespace FitCookieAI.RestComunication.GPT
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<GetGPTResponse> GetGPTResponseAction(HttpClient httpClient, string requestQuery)
+        public async Task<GetGPTResponse> GetGPTResponseAction( string requestQuery)
         {
-			GetGPTResponse _getGPTResponse = new GetGPTResponse();
-
-            using (var response = await httpClient.GetAsync(requestQuery))
+			using (var httpClient = new HttpClient())
             {
-                string apiResponse = await response.Content.ReadAsStringAsync();
+				GetGPTResponse _getGPTResponse = new GetGPTResponse();
 
-                if (!string.IsNullOrEmpty(apiResponse))
-                {
-                    var convert = JsonConvert.DeserializeObject<GetGPTResponse>(apiResponse);
+				using (var response = await httpClient.GetAsync(requestQuery))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
 
-                    if (convert != null)
-                    {
-                        _getGPTResponse = convert;
-                    }
-                }
-            }
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<GetGPTResponse>(apiResponse);
 
-            return _getGPTResponse;
+						if (convert != null)
+						{
+							_getGPTResponse = convert;
+						}
+					}
+				}
+
+				return _getGPTResponse;
+			}	
         }
     }
 }

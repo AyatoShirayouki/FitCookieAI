@@ -4,7 +4,8 @@
     $('#login-authentication-error').hide();
     $('#authenticated').hide();
     $('#btn-generate').hide();
-    $('#btn-logout').css('visibility', 'hidden');;
+    $('#btn-logout').css('visibility', 'hidden');
+    $('#result-error-container').hide();
 
     /////////////////////////////////// Login and SignUp Validations ///////////////////////////////////
     function validateEmail(email) {
@@ -173,7 +174,7 @@
     $('#ocupation').on('input', dietPlanValidations);
 
     $('#DietaryRestrictions, #foodPreferences, #ocupation').keyup(function () {
-        var maxLength = 60;
+        var maxLength = 150;
         var length = $(this).val().length;
         if (length > maxLength) {
             $(this).val($(this).val().substring(0, maxLength));
