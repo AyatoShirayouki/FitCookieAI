@@ -76,3 +76,15 @@ E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\obj\Debug\net7.0\refint\GPT
 E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\obj\Debug\net7.0\GPT_Web_API.pdb
 E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\obj\Debug\net7.0\GPT_Web_API.genruntimeconfig.cache
 E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\obj\Debug\net7.0\ref\GPT_Web_API.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\Npgsql.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\Authorisation.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\FitCookieAI_ApplicationService.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\FitCookieAI_Data.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\FitCookieAI_Repository.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\GlobalVariables.dll
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\Authorisation.pdb
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\FitCookieAI_ApplicationService.pdb
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\FitCookieAI_Data.pdb
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\FitCookieAI_Repository.pdb
+E:\Projects\FitCookieAIClient-deployment\GPT_Web_API\bin\Debug\net7.0\GlobalVariables.pdb

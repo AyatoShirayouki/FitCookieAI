@@ -12,13 +12,16 @@ namespace FitCookieAI.RestComunication.GPT
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<GetGPTResponse> GetGPTResponseAction( string requestQuery)
+        public async Task<GetGPTResponse> GetGPTResponseAction(string requestQuery)
         {
 			using (var httpClient = new HttpClient())
             {
 				GetGPTResponse _getGPTResponse = new GetGPTResponse();
 
-				using (var response = await httpClient.GetAsync(requestQuery))
+                httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+                httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+                using (var response = await httpClient.GetAsync(requestQuery))
 				{
 					string apiResponse = await response.Content.ReadAsStringAsync();
 
@@ -29,7 +32,10 @@ namespace FitCookieAI.RestComunication.GPT
 						if (convert != null)
 						{
 							_getGPTResponse = convert;
-						}
+
+                            _session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+                            _session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+                        }
 					}
 				}
 

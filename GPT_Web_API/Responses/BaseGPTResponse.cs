@@ -1,6 +1,6 @@
 ﻿namespace GPT_Web_API.Responses
 {
-	public class BaseGPTResponse
+	public class BaseGPTResponse : BaseResponseMessage
 	{
 		public string? id { get; set; }
 		public string? Object { get; set; }

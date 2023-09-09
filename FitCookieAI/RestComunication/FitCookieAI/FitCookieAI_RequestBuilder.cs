@@ -98,6 +98,12 @@
 			return uri + _router.PasswordRecoveryTokens_GetById + $"id={id}";
 		}
 
+		//GeneratedPlans
+		public string SaveGeneratedPlansRequestBuilder(string uri)
+		{
+			return uri + _router.GeneratedPlans_Save;
+		}
+
 		//Users
 		public string LoginRequestBuilder(string uri, string email, string password)
         {

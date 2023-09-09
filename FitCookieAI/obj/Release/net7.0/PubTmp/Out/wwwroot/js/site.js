@@ -4,7 +4,30 @@
     $('#login-authentication-error').hide();
     $('#authenticated').hide();
     $('#btn-generate').hide();
-    $('#btn-logout').css('visibility', 'hidden');;
+    $('#btn-logout').css('visibility', 'hidden');
+    $('#btn-logout-3').hide();
+    $('#result-error-container').hide();
+
+    ////////////////////////////////////////////// DatePicker //////////////////////////////////////////////
+
+    /*
+    const input = document.getElementById('age');
+    const datepicker = new TheDatepicker.Datepicker(input);
+    datepicker.render();
+    */
+
+    ////////////////////////////////////////////// DatePicker //////////////////////////////////////////////
+
+    if ($('#weight').val().trim().length != 0 && $('#targetWeight').val().trim().length != 0) {
+        $('#btn-next-step-2').prop('disabled', false);
+    }
+
+    if ($('#weight').val().trim().length != 0 && $('#height').val().trim().length != 0) {
+        updateBMI();
+        if ($('#BMI').val().trim().length != 0) {
+            $('#btn-next-step-3').prop('disabled', false);
+        }
+    }
 
     /////////////////////////////////// Login and SignUp Validations ///////////////////////////////////
     function validateEmail(email) {
@@ -13,11 +36,13 @@
     }
 
     function validatePassword(password) {
-        return password.length >= 8;
+        var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        return password.length >= 6; //passwordRegex.test(password);
     }
 
     function validateNotEmpty(value) {
-        return value.trim().length > 0;
+        var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        return value.trim().length > 0; //passwordRegex.test(value);
     }
 
     function validateInput(input, showError) {
@@ -173,7 +198,7 @@
     $('#ocupation').on('input', dietPlanValidations);
 
     $('#DietaryRestrictions, #foodPreferences, #ocupation').keyup(function () {
-        var maxLength = 60;
+        var maxLength = 150;
         var length = $(this).val().length;
         if (length > maxLength) {
             $(this).val($(this).val().substring(0, maxLength));
@@ -183,6 +208,7 @@
     ////////////////////////////////////////// Form validations /////////////////////////////////////////
 
     //--------------------------------------------- Download the PDF file when the button is clicked - start -----------------------------------------
+    /*
     $("#download-btn").click(function () {
         var HTML_Width = $("#result-container").find("#pdf-content").width();
         var HTML_Height = $("#result-container").find("#pdf-content").height();
@@ -205,6 +231,63 @@
             pdf.save("Your_Diet_Plan.pdf");
         });
     });
+    */
+
+    $("#show-password").click(function () {
+        console.log("vliza");
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    });
+
+    $("#download-btn").click(function () {
+        // clone the element
+        var clone = $("#result-container").find("#pdf-content").clone();
+
+        // apply rotation and append to body (make sure it's not visible to the user)
+        clone.css({
+            'transform': 'rotate(90deg)',
+            'position': 'absolute',
+            'left': '-1000px', // off screen
+            'font-size': '1em', // reduce font size
+            'margin-left': '20%', // add left margin
+        }).attr('id', 'pdf-content-clone').appendTo('body');
+
+        var HTML_Width = clone.width();
+        var HTML_Height = clone.height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 3.5);
+        var PDF_Height = (PDF_Width * 2.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        clone.css('transform', 'rotate(360deg)'); // rotate back to original orientation
+
+        html2canvas(clone[0]).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Height, PDF_Width]); // Initiate as portrait
+
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_height, canvas_image_width); // flip width and height
+
+            for (var i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage(PDF_Height, PDF_Width);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Width * i) + (top_left_margin * 4), canvas_image_height, canvas_image_width);
+            }
+
+            pdf.save("Your_Diet_Plan.pdf");
+
+            // remove the clone after we're done with it
+            clone.remove();
+        });
+    });
+
+
+
     //--------------------------------------------- Download the PDF file when the button is clicked - end -----------------------------------------
 
     //---------------------------------------------------------- Print diet plan - tart ------------------------------------------------------------
@@ -256,13 +339,10 @@ window.onload = function () {
 
     ////////////////////////////////////////// Terms and conditions link ////////////////////////////////
     // Get the link
-    var link = document.getElementById("terms_and_conditions_link");
+    var link = $("#terms_and_conditions_link");
 
     // When the user clicks the link, open the modal 
-    link.onclick = function (e) {
-        e.preventDefault(); // prevent the default action
-        showModal();
-    }
+    link.on('click', function (e) {e.preventDefault(); showModal(); })
 
     ////////////////////////////////////////// Terms and conditions link ////////////////////////////////
 };

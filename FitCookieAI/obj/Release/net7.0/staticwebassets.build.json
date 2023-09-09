@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KCcaipC9pyJSI3JQzJ3dtCUlF9etnpyUMSdadGukSvg=",
+  "Hash": "a/b/vqnnMF3PFFTsMPd5DPdkYkKv7Ih9Xedy6bQ1xLs=",
   "Source": "FitCookieAI",
   "BasePath": "_content/FitCookieAI",
   "Mode": "Default",
@@ -148,6 +148,23 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\css\\the-datepicker.css",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "css/the-datepicker.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\the-datepicker.css"
+    },
+    {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\favicon.ico",
       "SourceId": "FitCookieAI",
       "SourceType": "Discovered",
@@ -250,6 +267,40 @@
       "OriginalItemSpec": "wwwroot\\img\\cookie-gif.gif"
     },
     {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\diet_icon_steps.png",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/diet_icon_steps.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\diet_icon_steps.png"
+    },
+    {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.png",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/fitcookieai_logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\fitcookieai_logo.png"
+    },
+    {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieloading_gif.gif",
       "SourceId": "FitCookieAI",
       "SourceType": "Discovered",
@@ -301,6 +352,23 @@
       "OriginalItemSpec": "wwwroot\\img\\loading-cookie.gif"
     },
     {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\muscle_supplement_icon.png",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/muscle_supplement_icon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\muscle_supplement_icon.png"
+    },
+    {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\openAI_logo.png",
       "SourceId": "FitCookieAI",
       "SourceType": "Discovered",
@@ -333,6 +401,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\screenshot-frame.png"
+    },
+    {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\smart_profesor_expert_icon.png",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/smart_profesor_expert_icon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\smart_profesor_expert_icon.png"
     },
     {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\SnapshotV2_1.png",
@@ -486,6 +571,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\the-datepicker.js",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "js/the-datepicker.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\the-datepicker.js"
     },
     {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\lib\\animate\\animate.css",

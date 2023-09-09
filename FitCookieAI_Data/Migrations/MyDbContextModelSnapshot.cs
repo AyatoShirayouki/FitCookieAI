@@ -17,6 +17,7 @@ namespace FitCookieAI_Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("FitCookieAI")
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -68,18 +69,18 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", "FitCookieAI");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            DOB = new DateTime(2023, 7, 22, 21, 42, 12, 286, DateTimeKind.Local).AddTicks(7450),
+                            DOB = new DateTime(2023, 8, 31, 23, 41, 17, 165, DateTimeKind.Local).AddTicks(9412),
                             Email = "admin@mail.com",
                             FirstName = "Admin",
                             Gender = "Male",
                             LastName = "User",
-                            Password = "BYf7BoueaRGFIr5jXgCXrAaGfLwKMZCUtfP99F8SgtQSIXaVFv8vu/44Fo+LaOQk",
+                            Password = "qGl8FHhjwJm/0tYovT/PIF73XvOO/RcGwA3QWoSClK2rI5Ec8qtnbX7b8opGUxSC",
                             ProfilePhotoName = "",
                             StatusId = 1
                         });
@@ -100,7 +101,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AdminStatuses");
+                    b.ToTable("AdminStatuses", "FitCookieAI");
 
                     b.HasData(
                         new
@@ -153,7 +154,34 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("AdminId");
 
-                    b.ToTable("RefreshAdminTokens");
+                    b.ToTable("RefreshAdminTokens", "FitCookieAI");
+                });
+
+            modelBuilder.Entity("FitCookieAI_Data.Entities.Others.GeneratedPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Plan")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GeneratedPlans", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.Others.Payment", b =>
@@ -191,7 +219,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.Others.PaymentPlan", b =>
@@ -218,7 +246,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentPlans");
+                    b.ToTable("PaymentPlans", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.Others.PaymentPlanFeature", b =>
@@ -241,7 +269,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("PaymentPlanId");
 
-                    b.ToTable("PaymentPlanFeatures");
+                    b.ToTable("PaymentPlanFeatures", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.Others.PaymentPlanToUser", b =>
@@ -264,7 +292,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PaymentPlansToUsers");
+                    b.ToTable("PaymentPlansToUsers", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.UserRelated.PasswordRecoveryToken", b =>
@@ -293,7 +321,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordRecoveryTokens");
+                    b.ToTable("PasswordRecoveryTokens", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.UserRelated.RefreshUserToken", b =>
@@ -329,7 +357,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshUserTokens");
+                    b.ToTable("RefreshUserTokens", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.UserRelated.User", b =>
@@ -378,7 +406,7 @@ namespace FitCookieAI_Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", "FitCookieAI");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.AdminRelated.Admin", b =>
@@ -401,6 +429,17 @@ namespace FitCookieAI_Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ParentAdmin");
+                });
+
+            modelBuilder.Entity("FitCookieAI_Data.Entities.Others.GeneratedPlan", b =>
+                {
+                    b.HasOne("FitCookieAI_Data.Entities.UserRelated.User", "ParentUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParentUser");
                 });
 
             modelBuilder.Entity("FitCookieAI_Data.Entities.Others.Payment", b =>

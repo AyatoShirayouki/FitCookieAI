@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+	  <ApplicationIcon>wwwroot\img\fitcookieai_logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

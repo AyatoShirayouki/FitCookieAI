@@ -1,4 +1,5 @@
-﻿using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
+﻿using FitCookieAI.RestComunication.FitCookieAI.Responses.GeneratedPlans;
+using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
 using FitCookieAI.RestComunication.FitCookieAI.Responses.PaymentRelated.Payments;
 using FitCookieAI.RestComunication.FitCookieAI.Responses.UserRelated;
 using FitCookieAI_ApplicationService.DTOs.Others;
@@ -258,7 +259,6 @@ namespace FitCookieAI.RestComunication.FitCookieAI
             {
                 SavePasswordRecoveryTokensResponse _savePasswordRecoveryTokensResponse = new SavePasswordRecoveryTokensResponse();
 
-
                 httpClient.BaseAddress = new Uri(requestQuery);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -354,6 +354,46 @@ namespace FitCookieAI.RestComunication.FitCookieAI
 					}
 				}
 				return _savePaymentResponse;
+			}
+		}
+
+		//GeneratedPlans
+		public async Task<SaveGeneratedPlansResponse> SaveGeneratedPlansAction(GeneratedPlanDTO request, string requestQuery)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				SaveGeneratedPlansResponse _saveGeneratedPlansResponse = new SaveGeneratedPlansResponse();
+
+				httpClient.DefaultRequestHeaders.Add("token", _session.GetString("Token"));
+				httpClient.DefaultRequestHeaders.Add("refreshToken", _session.GetString("RefreshToken"));
+
+				httpClient.BaseAddress = new Uri(requestQuery);
+				httpClient.DefaultRequestHeaders.Accept.Clear();
+				httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var content = JsonConvert.SerializeObject(request);
+				var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+				var byteContent = new ByteArrayContent(buffer);
+				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+				using (var response = await httpClient.PostAsync("", byteContent))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
+
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<SaveGeneratedPlansResponse>(apiResponse);
+
+						if (convert != null)
+						{
+							_saveGeneratedPlansResponse = convert;
+
+							_session.SetString("Token", response.Headers.FirstOrDefault(x => x.Key == "token").Value.FirstOrDefault());
+							_session.SetString("RefreshToken", response.Headers.FirstOrDefault(x => x.Key == "refreshToken").Value.FirstOrDefault());
+						}
+					}
+				}
+				return _saveGeneratedPlansResponse;
 			}
 		}
 	}

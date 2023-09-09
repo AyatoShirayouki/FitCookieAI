@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\css\\the-datepicker.css",
+      "PackagePath": "staticwebassets\\css\\the-datepicker.css"
+    },
+    {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
@@ -69,8 +73,20 @@
       "PackagePath": "staticwebassets\\img\\cookie-gif.gif"
     },
     {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\diet_icon_steps.png",
+      "PackagePath": "staticwebassets\\img\\diet_icon_steps.png"
+    },
+    {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookie-logo.png.webp",
       "PackagePath": "staticwebassets\\img\\fitcookie-logo.png.webp"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.ico",
+      "PackagePath": "staticwebassets\\img\\fitcookieai_logo.ico"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.png",
+      "PackagePath": "staticwebassets\\img\\fitcookieai_logo.png"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieloading_gif.gif",
@@ -81,12 +97,20 @@
       "PackagePath": "staticwebassets\\img\\loading-cookie.gif"
     },
     {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\muscle_supplement_icon.png",
+      "PackagePath": "staticwebassets\\img\\muscle_supplement_icon.png"
+    },
+    {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\openAI_logo.png",
       "PackagePath": "staticwebassets\\img\\openAI_logo.png"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\screenshot-frame.png",
       "PackagePath": "staticwebassets\\img\\screenshot-frame.png"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\smart_profesor_expert_icon.png",
+      "PackagePath": "staticwebassets\\img\\smart_profesor_expert_icon.png"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\FormSteps.js",
@@ -97,12 +121,28 @@
       "PackagePath": "staticwebassets\\js\\checkout.js"
     },
     {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\html2canvas.js",
+      "PackagePath": "staticwebassets\\js\\html2canvas.js"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\html2canvas.min.js",
+      "PackagePath": "staticwebassets\\js\\html2canvas.min.js"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\html2pdf.bundle.min.js",
+      "PackagePath": "staticwebassets\\js\\html2pdf.bundle.min.js"
+    },
+    {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\main.js",
       "PackagePath": "staticwebassets\\js\\main.js"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\the-datepicker.js",
+      "PackagePath": "staticwebassets\\js\\the-datepicker.js"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\lib\\animate\\animate.css",

@@ -22,6 +22,7 @@ namespace FitCookieAI_Data.Context
 		public DbSet<PaymentPlanToUser> PaymentPlansToUsers { get; set; }
 		public DbSet<RefreshUserToken> RefreshUserTokens { get; set; }
         public DbSet<RefreshAdminToken> RefreshAdminTokens { get; set; }
+		public DbSet<GeneratedPlan> GeneratedPlans { get; set; }
 		public DbSet<PasswordRecoveryToken> PasswordRecoveryTokens { get; set; }
 
 		public MyDbContext()
@@ -35,6 +36,7 @@ namespace FitCookieAI_Data.Context
 			PaymentPlansToUsers = this.Set<PaymentPlanToUser>();
 			RefreshAdminTokens = this.Set<RefreshAdminToken>();
 			RefreshUserTokens = this.Set<RefreshUserToken>();
+			GeneratedPlans = this.Set<GeneratedPlan>();
 			PasswordRecoveryTokens = this.Set<PasswordRecoveryToken>();
 
 			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -44,8 +46,10 @@ namespace FitCookieAI_Data.Context
 		{
 			base.OnModelCreating(modelBuilder);
 
-			// Seeding AdminStatus
-			modelBuilder.Entity<AdminStatus>().HasData(new AdminStatus
+            modelBuilder.HasDefaultSchema("FitCookieAI");
+
+            // Seeding AdminStatus
+            modelBuilder.Entity<AdminStatus>().HasData(new AdminStatus
 			{
 				Id = 1, 
 				Name = "Developer" 
@@ -81,9 +85,10 @@ namespace FitCookieAI_Data.Context
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			//Data Source = AKIHIRO\\SQLEXPRESS; TrustServerCertificate = True; initial catalog = FitCookieAIDb; user id = alex; password = rexibexi1
 			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-			optionsBuilder.UseNpgsql("User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitCookieAI_db");
+            //User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitCookieAI_db
+            //Server=4.234.153.155;Database=fitcookie;Port=5432;User ID=postgres;Password=fitcookieAI2023
+            optionsBuilder.UseNpgsql("User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitCookieAI_db");
 		}
 	}
 }

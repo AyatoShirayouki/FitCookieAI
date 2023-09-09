@@ -33,6 +33,9 @@
 		public string PasswordRecoveryTokens_Save = "/api/PasswordRecoveryTokens/Save";
 		public string PasswordRecoveryTokens_Delete = "/api/PasswordRecoveryTokens/Delete?";
 
+		//GeneratedPlans
+		public string GeneratedPlans_Save = "/api/GeneratedPlans/Save";
+
 		//Users
 		public string Users_SignUp = "/api/Users/SignUp";
         public string Users_Login = "/api/Users/Login?";

@@ -9,7 +9,7 @@
     <meta content="Diet Plan Generator" name="description">
 
    <!-- Favicon -->
-    <link href="~/img/favicon.ico" rel="icon">
+    <link href="~/img/fitcookieai_logo.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,10 +26,56 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/the-datepicker.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
     <link href="~/css/SignUp.css" rel="stylesheet">
+
+    <style>
+
+        .navbar-light .navbar-nav .nav-link:hover::before,
+        .navbar-light .navbar-nav .nav-link.active::before {
+            display: none;
+        }
+        /*
+                .navbar-light .navbar-nav .nav-link:hover,
+                .navbar-light .navbar-nav .nav-link.active {
+                    text-decoration: underline;
+                }
+                */
+        .guide-modal {
+            position: absolute;
+            top: -88px;
+            width: 135px;
+            height: 75px;
+            padding: 10px;
+            border-radius: 15px;
+            color: #fff;
+            background-color: rgba(0,0,0,.8);
+            box-sizing: border-box;
+        }
+
+            .guide-modal::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                width: 0;
+                height: 0;
+                bottom: -10.5px;
+                border-top: 11px solid rgba(0,0,0,.8);
+                border-left: 11px solid transparent;
+                border-right: 11px solid transparent;
+            }
+
+        .steps-img {
+            width: 135px;
+            height: auto;
+        }
+
+    </style>
     
 </head>
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
@@ -45,9 +91,7 @@
         <div class="container-xxl position-relative p-0" id="home">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
                 <a href="" class="navbar-brand p-0">
-                    <img class="img-fluid" src="~/img/fitcookie-logo.png.webp" alt="" />
-                    <span class="m-0">AI</span>
-                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                    <img class="img-fluid" src="~/img/fitcookieai_logo.png" alt="" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
@@ -56,15 +100,19 @@
                     <div class="navbar-nav mx-auto py-0">
                         <a href="#home" class="nav-item nav-link active">Home</a>
                         <a href="#about" class="nav-item nav-link">About</a>
-                        <a href="#feature" class="nav-item nav-link">Features</a>
+                        <a href="#guide" class="nav-item nav-link">Guide</a>
                         <a href="#generator" class="nav-item nav-link">Diet plan generator</a>
+                        <a href="#feature" class="nav-item nav-link">Features</a>
                     </div>
                     <a href="#generator" class="btn btn-primary-gradient rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Generate a diet plan</a>
+
                     
                     <button type="button" name="logout" id="btn-logout" class="btn-logout btn btn-primary-gradient rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Logout</button>
+                    <button type="button" name="logout" id="btn-logout-3" class="btn-logout btn btn-primary-gradient rounded-pill d-lg-none">Logout</button>
                     @if (!string.IsNullOrEmpty(this.Context.Session.GetString("Email")))
                     {
                         <button type="button" name="logout" id="btn-logout-1" class="btn-logout btn btn-primary-gradient rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Logout</button>
+                        <button type="button" name="logout" id="btn-logout-2" class="btn-logout btn btn-primary-gradient rounded-pill d-lg-none">Logout</button>
                     }
                 </div>
             </nav>
@@ -74,11 +122,12 @@
                     <div class="row g-5">
                         <div class="col-lg-8 text-center text-lg-start">
                             <h1 class="text-white mb-4 animated slideInDown">Fit Cookie - Your Personal Nutritionist</h1>
-                            <p class="text-white pb-3 animated slideInDown">Welcome to the future of personalized nutrition. 
+                            <p class="text-white pb-3 animated slideInDown">
+                                Welcome to the future of personalized nutrition.
                                 We've taken the guesswork out of healthy eating, providing you with custom-made, scientifically-backed diet plans tailored to your needs and lifestyle !
                             </p>
                             <a href="#about" class="btn btn-primary-gradient py-sm-3 px-4 px-sm-5 rounded-pill me-3 animated slideInLeft">Read More</a>
-                            
+
                         </div>
                         <div class="col-lg-4 d-flex justify-content-center justify-content-lg-end wow fadeInUp" data-wow-delay="0.3s">
                             <div class="owl-carousel screenshot-carousel">
@@ -94,21 +143,20 @@
             </div>
         </div>
         <!-- Navbar & Hero End -->
-
         <!-- About Start -->
         <div class="container-xxl py-5" id="about">
             <div class="container py-5 px-lg-5">
                 <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
                         <h5 class="text-primary-gradient fw-medium">About</h5>
                         <h1 class="mb-4">Welcome to our AI-powered diet plan generator!</h1>
                         <p class="mb-4">
-                            We believe nutrition is not one-size-fits-all. 
-                            That's why our AI-enabled Diet Plan Generator uses sophisticated algorithms and real-time data to create a nutrition plan that adapts to your lifestyle. 
+                            We believe nutrition is not one-size-fits-all.
+                            That's why our AI-enabled Diet Plan Generator uses sophisticated algorithms and real-time data to create a nutrition plan that adapts to your lifestyle.
                             It's like having a personal nutritionist that's available 24/7!
                         </p>
                         <p class="mb-4">
-                            Your journey towards improved health and wellness begins with just a few clicks. 
+                            Your journey towards improved health and wellness begins with just a few clicks.
                             Start with our AI-Enabled Diet Plan Generator today and embrace the revolution in personalized nutrition.
                         </p>
                         <p class="mb-4">
@@ -116,13 +164,70 @@
                         </p>
                         <a href="#generator" class="btn btn-primary-gradient py-sm-3 px-4 px-sm-5 rounded-pill mt-3">Generate a diet plan</a>
                     </div>
-                    <div class="col-lg-6">
-                        <img class="img-fluid wow fadeInUp" data-wow-delay="0.5s" src="~/img/cookie-gif.gif">
-                    </div>
                 </div>
             </div>
         </div>
         <!-- About End -->
+        <!-- Guide Start -->
+
+        <div class="container-xxl py-5" id="guide">
+            <div class="container py-5 px-lg-5">
+                <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="text-primary-gradient fw-medium">How It Works</h5>
+                    <h1 class="mb-5">3 Easy Steps</h1>
+                </div>
+                <div class="row gy-5 gx-4 justify-content-center">
+                    <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="position-relative bg-light rounded pt-5 pb-4 px-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-secondary-gradient rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
+                                <img src="~/img/diet_icon_steps.png" alt="3" border="0" class="steps-img" />
+                            </div>
+                            <h5 class="mt-4 mb-3">Generate Your Meal & Supplements Plan</h5>
+                            <p class="mb-0">Experience the advanced functionality of our AI-based Meal and Supplements Plan generator by seamlessly inputting essential information and activating the 'Next' button.
+                                Embark on a transformative journey towards enhanced well-being and increased contentment.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="position-relative bg-light rounded pt-5 pb-4 px-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
+                                <img src="~/img/smart_profesor_expert_icon.png" alt="5" border="0" class="steps-img" />
+                            </div>
+                            <h5 class="mt-4 mb-3">Talk to Our Experts</h5>
+                            <p class="mb-0">Rest assured, our team of experts is readily available to provide prompt and insightful responses to any inquiries you may have.
+                                Never hesitate to seek their assistance for swift and valuable support.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="position-relative bg-light rounded pt-5 pb-4 px-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
+                                <img src="~/img/muscle_supplement_icon.png" alt="4" border="0" class="steps-img" />
+                            </div>
+                            <h5 class="mt-4 mb-3">Get Your Supplement Stack</h5>
+                            <p class="mb-0">In the final stride towards achieving your desired transformation, optimize your journey by exploring our diverse array of premium supplements. 
+                                Elevate your performance and attain your peak potential with the aid of our exceptional supplement selection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Guide End -->
+
+        <div class="container-xxl py-5" id="generator">
+            <div class="container py-5 px-lg-5">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="text-primary-gradient fw-medium">Diet plan Generator</h5>
+                    <h1 class="mb-5">Generate a diet plan!</h1>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="wow fadeInUp" data-wow-delay="0.3s">
+                            @RenderBody()
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <!-- Features Start -->
         <div class="container-xxl py-5" id="feature">
@@ -147,7 +252,7 @@
                                 <i class="fa fa-layer-group text-white fs-4"></i>
                             </div>
                             <h5 class="mb-3">Easy to use</h5>
-                            <p class="m-0">Just provide us with some basic information about yourself, including your age, height, weight, activity level, and dietary restrictions. Our AI algorithm will then take this information into account and generate a customized diet plan that meets your individual nutritional needs.</p>
+                            <p class="m-0">Share your age, height, weight, activity, dietary needs — Our AI creates perfect nutrition for you!.</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -163,23 +268,6 @@
             </div>
         </div>
         <!-- Features End -->
-
-        <div class="container-xxl py-5" id="generator">
-            <div class="container py-5 px-lg-5">
-                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="text-primary-gradient fw-medium">Diet plan Generator</h5>
-                    <h1 class="mb-5">Generate a diet plan!</h1>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-9">
-                        <div class="wow fadeInUp" data-wow-delay="0.3s">
-                            @RenderBody()
-                        </div>
-                    </div>
-                   
-                </div>
-            </div>
-        </div>
 
         <!-- Footer Start -->
         <div class="container-fluid bg-primary text-light footer wow fadeIn" data-wow-delay="0.1s">
@@ -202,11 +290,11 @@
                     <div class="col-md-6 col-lg-3">
                         <h4 class="text-white mb-4">Quick links</h4>
                         <a class="btn btn-link" href="#about">About Us</a>
+                        <a class="btn btn-link" href="#guide">Guide</a>
                         <a class="btn btn-link" href="#feature">Features</a>
                         <a class="btn btn-link" href="#generator">Diet plan generator</a>
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        
                     </div>
                 </div>
             </div>
@@ -215,9 +303,7 @@
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                             &copy; <a class="border-bottom" href="#">FitCookieAI</a>, All Right Reserved.
-                            Designed By <a class="border-bottom" href="https://www.linkedin.com/in/alexander-nestorov-283b881b8/">Alexander Nestorov</a>
-                            </br>
-                            Distributed By <a class="border-bottom" href="https://www.linkedin.com/in/rossgeorgiev/" target="_blank">Rosen Rosenov</a>
+                            Designed and distributed by <a class="border-bottom" href="https://aisy.tech/">Aisy Tech Ltd</a>
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
@@ -252,12 +338,14 @@
     <!-- Custom -->
     <script src="~/js/FormSteps.js"></script>
     <script src="~/js/site.js"></script>
+    <script src="~/js/the-datepicker.js"></script>
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 
     <script id="script" type="text/javascript">
         $(document).ready(function() {
+
             rootUrl = '@Url.Content("~")'
 
             // ----------------------------------------------------- Submit input for diet plan - start -------------------------------------------------------
@@ -299,6 +387,7 @@
                             $('#result-error-container').find('#result-error-message').html(result.message);
                             $('#result-error-container').show();
                             $("#btn-generate").prop("disabled", false);
+                            $("#btn-generate-1").prop("disabled", false);
 
                             $("#authentication-options").show();
                             $("#hasAccount").show();
@@ -308,8 +397,9 @@
                             $('#btn-generate').hide();
 
                             $('#btn-logout').css('visibility', 'hidden');
-
-                            console.log(result);
+                            $('#btn-logout-3').hide();
+                            $('#btn-logout-2').css('visibility', 'hidden');
+                            $('#btn-logout-1').css('visibility', 'hidden');
                         }
                         else{
                             $('#result-container').find('#result').html(result);
@@ -317,6 +407,9 @@
                             $("#result-container").show();
 
                             $("#btn-generate").prop("disabled", false);
+                            $("#btn-generate-1").prop("disabled", false);
+
+                            $('#loading-container_shopping_basket').hide();
 
                             //clear validation errors
                             $('#age-validation').html('');
@@ -324,17 +417,111 @@
                             $('#weight-validation').html('');
                             $('#general-validation-error').html('');
                         }
-                        //console.log(result);
                     },
                     error: function (error_message) {
                         $('#loading-container').hide();
                         $("#btn-generate").prop("disabled", false);
+                        $("#btn-generate-1").prop("disabled", false);
                         alert('Failed to receive the Data');
                         console.log('Failed: ' + error_message);
                     }
                 })
             }
             // ----------------------------------------------------- Submit input for diet plan - end -------------------------------------------------------
+
+            // ----------------------------------------------------- Generate a shopping basket - start -------------------------------------------------------
+
+            function generateShoppingBasket() {
+                $('#loading-container_shopping_basket').show();
+                var data = extractUniqueIngredients();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/GenerateShoppingBasket',
+                    data: { input: data.toString() },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    success: function (result) {
+                        if (result.code != null) {
+                            $('#loading-container_shopping_basket').hide();
+                            $('#result-error-container').find('#result-error-message').html(result.message);
+                            $('#result-error-container').show();
+                            $("#generate-shopping-basket-btn").prop("disabled", false);
+                            $("#download-btn").prop("disabled", false);
+                            $("#print-btn").prop("disabled", false);
+
+                            $("#authentication-options").show();
+                            $("#hasAccount").show();
+                            $("#noAccount").hide();
+                            $("#authenticated").hide();
+                            $("#btn-login").show();
+                            $('#btn-generate').hide();
+
+                            $('#btn-logout').css('visibility', 'hidden');
+                            $('#btn-logout-3').hide();
+                            $('#btn-logout-2').css('visibility', 'hidden');
+                            $('#btn-logout-1').css('visibility', 'hidden');
+                        }
+                        else {
+                            $('#result-container').find('#result').append(result);
+                            $('#loading-container_shopping_basket').hide();
+                            $("#generate-shopping-basket-btn").hide();
+                            $("#download-btn").prop("disabled", false);
+                            $("#print-btn").prop("disabled", false);
+                        }
+                    },
+                    error: function (error_message) {
+                        console.log("step 3 - bash eror deeba");
+                        $('#loading-container_shopping_basket').hide();
+                        $("#generate-shopping-basket-btn").prop("disabled", false);
+                        $("#download-btn").prop("disabled", false);
+                        $("#print-btn").prop("disabled", false);
+                        alert('Failed to receive the Data');
+                        console.log('Failed: ' + error_message);
+                    }
+                })
+            }
+
+            // ----------------------------------------------------- Generate a shopping basket - end ---------------------------------------------------------
+
+            // ----------------------------------------------- Extract unique ingredients from diet plan - start --------------------------------------------
+            function extractUniqueIngredients() {
+                const uniqueIngredients = new Set();
+
+                // Loop through each table row (skipping the header)
+                $("#diet_plan_table tbody tr:not(:first)").each(function () {
+
+                    // Get the 'Meals' column text
+                    const mealText = $(this).find("td:nth-child(2)").text();
+
+                    // Break the meals into individual components
+                    const mealComponents = mealText.split('<br>');
+
+                    mealComponents.forEach(meal => {
+
+                        // Break the meal into individual ingredients
+                        const ingredients = meal.split(', ');
+
+                        ingredients.forEach(ingredient => {
+
+                            // Take only the ingredient portion and its measurement
+                            const matches = ingredient.match(/([0-9]+\/?[0-9]*\s*[a-zA-Z]*\s)?([a-zA-Z\s]+)(,|$)/);
+
+                            if (matches) {
+                                const measurement = matches[1] ? matches[1].trim() : '';
+                                const name = matches[2] ? matches[2].trim() : '';
+
+                                // Add to the unique ingredient set
+                                if (name) {
+                                    uniqueIngredients.add(`${measurement} ${name}`);
+                                }
+                            }
+                        });
+                    });
+                });
+
+                return Array.from(uniqueIngredients).join(", ");
+            }
+            // ------------------------------------------------ Extract unique ingredients from diet plan - end ---------------------------------------------
 
             // -------------------------------------------- Generate - start -------------------------------------------
             $('.btn-generate').on('click', function (e) {
@@ -346,6 +533,16 @@
                 submitForm();
             });
             // -------------------------------------------- Generate - end -------------------------------------------
+
+            // -------------------------------------------- Shopping Basket - start -------------------------------------------
+            $('#generate-shopping-basket-btn').on('click', function (e) {
+                e.preventDefault();
+                $("#generate-shopping-basket-btn").prop("disabled", true);
+                $("#download-btn").prop("disabled", true);
+                $("#print-btn").prop("disabled", true);
+                generateShoppingBasket();
+            });
+            // -------------------------------------------- Shopping Basket - end -------------------------------------------
 
             // ------------------------------------------------------------ Logout - start ------------------------------------------------------------------
             $('.btn-logout').click(function () {
@@ -387,13 +584,12 @@
                             $("#DietaryRestrictions").text('');
                             $("#foodPreferences").text('');
 
-                            $('#btn-logout').css('visibility', 'hidden');;
+                            $('#btn-logout').css('visibility', 'hidden');
+                            $('#btn-logout-3').hide();
                             $('#btn-generate').hide();
                             $('#result-container').hide();
                             $('#result-error-container').hide();
                             // reset form and clean user input
-
-                            console.log('Logged out successfully!');
 
                             location.reload(true)
                         } else {
@@ -426,7 +622,6 @@
                 },
                 error: function () {
                     alert('Failed to receive the Data');
-                    console.log('Failed ');
                 }
             })
 
@@ -476,6 +671,8 @@
                 $("#hasAccount").hide();
                 $("#noAccount").hide();
                 $('#result-error-container').hide();
+                $("#btn-login").prop("disabled", true);
+
                 $.ajax({
                     type: 'POST',
                     url: '/Home/Login',
@@ -490,10 +687,11 @@
 
                             $("#authenticated").find("#user-names").text(response.names);
                             $('#btn-logout').css('visibility', 'visible');
+                            $('#btn-logout-3').show();
                             $('#btn-generate').show();
                             $("#authenticated").show();
                             $("#login-authentication-error").hide();
-                            console.log('Login successful');
+                            $("#btn-login").prop("disabled", false);
                         } else if (response.code === 400) {
                             $('#loading-container2').hide();
 
@@ -503,7 +701,7 @@
 
                             $("#login-authentication-error").show();
                             $("#login-authentication-error").find("#login-authentication-error-message").text('Login failed!');
-                            console.log('Invalid data');
+                            $("#btn-login").prop("disabled", false);
                         } else if (response.code === 200) {
                             $('#loading-container2').hide();
                             $("#authentication-options").show();
@@ -512,9 +710,8 @@
 
                             $("#login-authentication-error").show();
                             $("#login-authentication-error").find("#login-authentication-error-message").html('Email or Password is incorrect!');
-
+                            $("#btn-login").prop("disabled", false);
                             // Handle unsuccessful login attempt
-                            console.log('Login failed');
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
@@ -522,6 +719,7 @@
                         $("#authentication-options").show();
                         $("#hasAccount").show();
                         $("#noAccount").hide();
+                        $("#btn-login").prop("disabled", false);
                         // Handle any errors that occurred during the AJAX request
                         console.log('Error: ' + textStatus + ' ' + errorThrown);
                     }
@@ -556,14 +754,14 @@
                     PhoneNumber: phoneNumber
                 };
 
-                console.log(signUpData);
-
                 // Make the AJAX request to the Home controller's SignUp method
                 $('#loading-container2').show();
 
                 $("#authentication-options").hide();
                 $("#hasAccount").hide();
                 $("#noAccount").hide();
+                $("#btn-sign-up").prop("disabled", true);
+
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SignUp',
@@ -579,12 +777,11 @@
 
                             $("#authenticated").find("#user-names").text(response.names);
                             $('#btn-logout').css('visibility', 'visible');
+                            $('#btn-logout-3').show();
                             $("#authenticated").show();
-
-                            console.log(response.message);
+                            $("#btn-sign-up").prop("disabled", false);
 
                             $('#btn-generate').show();
-                            
                         } else if (response.code === 400) {
                             $('#loading-container2').hide();
 
@@ -594,7 +791,7 @@
 
                             $("#sign-up-authentication-error").show();
                             $("#sign-up-authentication-error").find("#sign-up-authentication-error-message").text(response.message);
-                            console.log(response.message);
+                            $("#btn-sign-up").prop("disabled", false);
                         } else if (response.code === 200) {
                             $('#loading-container2').hide();
 
@@ -604,7 +801,7 @@
 
                             $("#sign-up-authentication-error").show();
                             $("#sign-up-authentication-error").find("#sign-up-authentication-error-message").text(response.message);
-                            console.log(response.message);
+                            $("#btn-sign-up").prop("disabled", false);
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
@@ -613,6 +810,7 @@
                         $("#authentication-options").show();
                         $("#hasAccount").hide();
                         $("#noAccount").show();
+                        $("#btn-sign-up").prop("disabled", false);
 
                         // Handle any errors that occurred during the AJAX request
                         console.log('Error: ' + textStatus + ' ' + errorThrown);

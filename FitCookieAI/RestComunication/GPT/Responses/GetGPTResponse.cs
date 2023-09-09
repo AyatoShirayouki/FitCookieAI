@@ -1,4 +1,7 @@
-﻿namespace FitCookieAI.RestComunication.GPT.Responses
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+
+namespace FitCookieAI.RestComunication.GPT.Responses
 {
     public class GetGPTResponse
     {
@@ -17,6 +20,17 @@
         public List<Choice>? choices { get; set; }
         public Usage? usage { get; set; }
 
+
+        [JsonProperty(PropertyName = "code")]
+        public object? Code { get; set; }
+
+        [JsonProperty(PropertyName = "body", NullValueHandling = NullValueHandling.Ignore)]
+        public object? Body { get; set; }
+
+        [JsonProperty(PropertyName = "error", NullValueHandling = NullValueHandling.Ignore)]
+        public object? Error { get; set; }
+        public bool JwtSuccess { get; set; }
+        public List<string>? JwtErrors { get; set; }
 
         public class Choice
         {

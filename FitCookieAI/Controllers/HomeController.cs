@@ -20,6 +20,8 @@ using FitCookieAI.RestComunication.FitCookieAI.Responses.PasswordRecoveryTokens;
 using System.Net;
 using System.Text.RegularExpressions;
 using Microsoft.IdentityModel.Tokens;
+using FitCookieAI.RestComunication.FitCookieAI.Responses.GeneratedPlans;
+using System.Drawing;
 
 namespace FitCookieAI.Controllers
 {
@@ -44,6 +46,7 @@ namespace FitCookieAI.Controllers
 		private SavePasswordRecoveryTokensResponse _savePasswordRecoveryTokensResponse;
 		private GetAllPasswordRecoveryTokensResponse _getAllPasswordRecoveryTokensResponse;
 		private EditUserPasswordResponse _editUserPasswordResponse;
+		private SaveGeneratedPlansResponse _saveGeneratedPlansResponse;
 
 		string baseGPTUri;
 		string baseFitcookieAIUri;
@@ -75,6 +78,7 @@ namespace FitCookieAI.Controllers
 			_savePasswordRecoveryTokensResponse = new SavePasswordRecoveryTokensResponse();
 			_getAllPasswordRecoveryTokensResponse = new GetAllPasswordRecoveryTokensResponse();
 			_editUserPasswordResponse = new EditUserPasswordResponse();
+			_saveGeneratedPlansResponse = new SaveGeneratedPlansResponse();
 
 			_config= config;
 			_service = new GPT_Test_Service(_config);
@@ -117,18 +121,54 @@ namespace FitCookieAI.Controllers
         [HttpPost]
         public async Task<JsonResult> SignUp(SignUpVM model)
 		{
-            string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+            string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$";
             Regex regex = new Regex(pattern);
-
-            if (!ModelState.IsValid)
+			/*
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName) ||
+				string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.ConfirmPassword) || string.IsNullOrEmpty(model.Gender) ||
+				model.DOB == DateTime.MinValue || string.IsNullOrEmpty(model.PhoneNumber))
 			{
 				return Json(new { code = 400, message = "SignUp input is invalid (missing data)!" });
+			}
+			*/
+			if (string.IsNullOrEmpty(model.Email))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid Email is missing!" });
+			}
+			if (string.IsNullOrEmpty(model.FirstName))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid First Name is missing!" });
+			}
+			if (string.IsNullOrEmpty(model.LastName))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid Last Name is missing!" });
+			}
+			if (
+				string.IsNullOrEmpty(model.Password))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid Password is missing!" });
+			}
+			if (string.IsNullOrEmpty(model.ConfirmPassword))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid Confirm Pasword is missing!" });
+			}
+			if (string.IsNullOrEmpty(model.Gender))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid (Gender is missing!" });
+			}
+			if (model.DOB == DateTime.MinValue)
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid DOB is missing!" });
+			}
+			if (string.IsNullOrEmpty(model.PhoneNumber))
+			{
+				return Json(new { code = 400, message = "Sign Up input is invalid Phone number is missing!" });
 			}
 			if (model.Password != model.ConfirmPassword)
 			{
 				return Json(new { code = 400, message = "SignUp input is invalid (password != confirm pasword)!" });
 			}
-            if (!regex.IsMatch(model.Password) || model.Password.Length < 8 || model.Password.Length > 20)
+            if (!regex.IsMatch(model.Password) || model.Password.Length < 6 || model.Password.Length > 20)
             {
                 return Json(new { code = 400, message = "SignUp input is invalid password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters!" });
             }
@@ -166,6 +206,59 @@ namespace FitCookieAI.Controllers
 			return Json(new { code = 200, message = "SignUp failed!" });
 		}
 
+		[HttpPost]
+        public async Task<JsonResult> GenerateShoppingBasket(string input)
+		{
+            if (string.IsNullOrEmpty(this.HttpContext.Session.GetString("Email")))
+            {
+                return Json(new { code = 400, message = "User is not authenticated!" });
+            }
+
+            if (string.IsNullOrEmpty(input))
+            {
+                return Json(new { code = 400, message = "Input data was invalid!" });
+            }
+
+			string resultHeader = "<div class=\"text-center\">\r\n\t\t\t\t" +
+				"<h5 class=\"text-primary-gradient fw-medium\">Products</h5>\r\n\t\t\t\t" +
+				"<h1 class=\"mb-5\">Your shopping basket!</h1>\r\n\t\t\t</div>";
+
+			string GPT_Input = $"Please examine the following list of ingredients: {input}. For each ingredient," +
+				$" identify the fundamental grocery item that needs to be purchased from a supermarket. " +
+				$"Please exclude any preparation methods (like 'steamed', 'diced', 'grilled' etc.) and convert the quantities" +
+				$" to either grams or kilograms. Present the results in an HTML table with an id of 'shopping_basket_table'," +
+				$" containing columns for 'Product' and 'Quantity'.";
+
+			string result = "";
+
+            string requestQuery = _GPTRequestBuilder.PostGPTINputRequestBuilder(baseGPTUri, GPT_Input);
+            _GPTResponse = await _GPTRequestExecutor.GetGPTResponseAction(requestQuery);
+
+            if (_GPTResponse.Code != null && int.Parse(_GPTResponse.Code.ToString()) == 201)
+            {
+				result += resultHeader;
+                result += _GPTResponse.choices[0].text + "</br>";
+            }
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                GeneratedPlanDTO generatedPlan = new GeneratedPlanDTO
+                {
+                    Plan = "Shopping basket",
+                    CreatedAt = DateTime.Now,
+                    UserId = (int)this.HttpContext.Session.GetInt32("Id")
+                };
+                _saveGeneratedPlansResponse = await _fitCookieAIRequestExecutor.SaveGeneratedPlansAction(generatedPlan,
+                    _fitCookieAIRequestBuilder.SaveGeneratedPlansRequestBuilder(baseFitcookieAIUri));
+
+                return Json(result);
+            }
+            else
+            {
+                return Json(new { code = int.Parse(_GPTResponse.Code.ToString()), message = _GPTResponse.Error.ToString() });
+            }
+        }
+
         [HttpPost]
         public async Task<JsonResult> SubmitInput(SubmitInputVM model)
 		{
@@ -196,27 +289,18 @@ namespace FitCookieAI.Controllers
 			TimeSpan age = DateTime.Now.Subtract(model.DOB);
 			int years = (int)(age.TotalDays / 365.25);
 
-			/*
-			 * string input1 = $"As a profesional dietitian recomend me a diet plan with a large variety of delicious meals meals which must be different for every day of the week, " +
-				$"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" + 
-				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}. Recomend me a list of suplements (strenght building and health related) which would help me based on my needs in html format as an unordered list" +
-				$"and briefly explain the benefits of each of them." + $" Return the result as a HTML table in html format with colums: day of the week, meals(here you should include the quantity of each part of the meal in grams)" +
-				$", supplements per day (show all the suplements you've suggested above that I should" +
-				$" take in that day and how much of them should I take).";
-			 */
-
 			string result = "";
 
-			string input1 = $"As a profesional dietitian recomend me a diet plan with a large variety of delicious meals meals which must be different for every day of the week, " +
+			string input1 = $"As a profesional dietitian recomend me a diverse diet plan with a large variety of delicious meals meals which must be different for every day of the week, " +
 				$"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" +
 				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}. " +
-				$"Return the result as a HTML table in html format with colums: day of the week and meals(here you should include the quantity of each part of the meal in grams)";
+				$"Return the result as a HTML table with id=diet_plan_table in html format with colums: day of the week and meals(here you should include the quantity of each part of the meal in grams)";
 
 			string input2 = $"As a profesional dietitian recomend me a list of supplements, how much of them should i take per day and briefly explain the benefits of each of them, " +
-				$"(strenght building and health related) which would help me based on my needs in html format as a html table with collumns Supplement, Description and Dose per day. " 
+				$"(strenght building and health related) which would help me based on my needs in html format as a html table with id=supplements_table and with collumns Supplement, Description and Dose per day. " 
 				+ $"I am a {model.Gender}, {years} years old, I weigh {model.Weight} kilograms, my target weight is {model.TargetWeight} kilograms, my height is {model.Height} meters, my BMI is {model.BMI}, my activity level is {model.ActivityLevel}" +
 				dietaryRestrictions + foodPreferences + $", my healt goal is to {model.HealthGoal}, and my oocupations is {model.Ocupation}.";
-            /*
+			/*
 			BaseGPTTestRequest request = new BaseGPTTestRequest();
 			BaseGPTTestResponse response = new BaseGPTTestResponse();
 
@@ -245,17 +329,53 @@ namespace FitCookieAI.Controllers
 			}
 			*/
 
+			string supplementsHeader = "<div class=\"text-center\">\r\n\t\t\t\t" +
+				"<h5 class=\"text-primary-gradient fw-medium\">Supplements</h5>\r\n\t\t\t\t" +
+				"<h1 class=\"mb-5\">Your recomended supplements!</h1>\r\n\t\t\t</div>";
+
+			string shoppingBasketLoadingContainer = "<div id=\"loading-container_shopping_basket\" class=\"row py-5\">\r\n\t" +
+				"<div class=\"container py-5 px-lg-5\">\r\n\t\t<div class=\"row justify-content-center text-center\">\r\n\t\t\t" +
+				"<div class=\"col-lg-12 justify-content-center\">\r\n\t\t\t\t<div class=\"justify-content-center\">\r\n\t\t\t\t\t" +
+				"<h5 class=\"required\">Your shopping basket is being generated!</h5>\r\n\t\t\t\t\t<p class=\"required\">" +
+				"This could take between 30 to 60 seconds</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div id=\"loading-animation\" class=\"justify-content-center\">\r\n\t\t\t\t\t" +
+				"<img src=\"./img/fitcookieloading_gif.gif\" alt=\"Loading...\" />\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+
             string requestQuery = _GPTRequestBuilder.PostGPTINputRequestBuilder(baseGPTUri, input1);
 			_GPTResponse = await _GPTRequestExecutor.GetGPTResponseAction(requestQuery);
 
-			result += _GPTResponse.choices[0].text + "</br>";
+			if (_GPTResponse.Code != null && int.Parse(_GPTResponse.Code.ToString()) == 201)
+			{
+                result += _GPTResponse.choices[0].text + "</br>";
+            }
 
             requestQuery = _GPTRequestBuilder.PostGPTINputRequestBuilder(baseGPTUri, input2);
             _GPTResponse = await _GPTRequestExecutor.GetGPTResponseAction(requestQuery);
 
-			result += _GPTResponse.choices[0].text;
+            if (_GPTResponse.Code != null && int.Parse(_GPTResponse.Code.ToString()) == 201)
+            {
+				result += supplementsHeader;
+                result += _GPTResponse.choices[0].text + "</br>";
+            }
 
-            return Json(result);
+			if (!string.IsNullOrEmpty(result))
+			{
+				GeneratedPlanDTO generatedPlan = new GeneratedPlanDTO
+				{
+					Plan = "Diet Plan",
+					CreatedAt = DateTime.Now,
+					UserId = (int)this.HttpContext.Session.GetInt32("Id")
+				};
+				_saveGeneratedPlansResponse = await _fitCookieAIRequestExecutor.SaveGeneratedPlansAction(generatedPlan, 
+					_fitCookieAIRequestBuilder.SaveGeneratedPlansRequestBuilder(baseFitcookieAIUri));
+
+				result += shoppingBasketLoadingContainer + "</br>";
+
+                return Json(result);
+            }
+			else
+			{
+                return Json(new { code = int.Parse(_GPTResponse.Code.ToString()), message = _GPTResponse.Error.ToString() });
+            }
 		}
 
 		[HttpPost]
@@ -305,7 +425,7 @@ namespace FitCookieAI.Controllers
                 return RedirectToAction("RestorePasswordStep2", "Home");
             }
 
-            string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+            string pattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$";
             Regex regex = new Regex(pattern);
 
             if (!ModelState.IsValid)
@@ -319,9 +439,9 @@ namespace FitCookieAI.Controllers
                 return View(model);
             }
 
-			if (!regex.IsMatch(model.Password) || model.Password.Length < 8 || model.Password.Length > 20)
+			if (!regex.IsMatch(model.Password) || model.Password.Length < 6 || model.Password.Length > 20)
 			{
-                ModelState.AddModelError("Password-error", "Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+                ModelState.AddModelError("Password-error", "Password must contain at least one number and one uppercase and lowercase letter, and between 6 and 20 characters");
                 return View(model);
             }
 
