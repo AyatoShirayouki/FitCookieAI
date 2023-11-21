@@ -286,7 +286,35 @@ namespace FitCookieAI.RestComunication.FitCookieAI
             }
         }
 
-        public async Task<GetPasswordRecoveryTokensByIdResponse> GetPasswordRecoveryTokensByIdAction(string requestQuery)
+		public async Task<SendEmailResponse> SendEmailAction(string requestQuery)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				SendEmailResponse _sendEmailResponse = new SendEmailResponse();
+
+				httpClient.BaseAddress = new Uri(requestQuery);
+				httpClient.DefaultRequestHeaders.Accept.Clear();
+				httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				using (var response = await httpClient.PostAsync(requestQuery,null))
+				{
+					string apiResponse = await response.Content.ReadAsStringAsync();
+
+					if (!string.IsNullOrEmpty(apiResponse))
+					{
+						var convert = JsonConvert.DeserializeObject<SendEmailResponse>(apiResponse);
+
+						if (convert != null)
+						{
+							_sendEmailResponse = convert;
+						}
+					}
+				}
+				return _sendEmailResponse;
+			}
+		}
+
+		public async Task<GetPasswordRecoveryTokensByIdResponse> GetPasswordRecoveryTokensByIdAction(string requestQuery)
 		{
 			using (var httpClient = new HttpClient())
 			{

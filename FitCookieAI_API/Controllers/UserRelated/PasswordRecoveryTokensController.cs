@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Mail;
+using System.Net;
+using System;
 
 namespace FitCookieAI_API.Controllers.UserRelated
 {
@@ -23,6 +26,9 @@ namespace FitCookieAI_API.Controllers.UserRelated
 
 		private BaseResponseMessage response;
 		private TokenRequestDTO tokenRequest;
+
+		private static readonly Random random = new Random();
+		private const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 		public PasswordRecoveryTokensController(IOptionsMonitor<JwtConfig> optionsMonitor, TokenValidationParameters tokenValidationParams, IHttpContextAccessor httpContextAccessor)
 		{
@@ -111,6 +117,63 @@ namespace FitCookieAI_API.Controllers.UserRelated
 					response.JwtSuccess = jwtAdminToken.JwtSuccess;
 					response.JwtErrors = jwtAdminToken.JwtErrors;
 				}
+				return new JsonResult(response);
+			}
+		}
+
+
+		[HttpPost]
+		[Route("SendEmail")]
+		public async Task<IActionResult> SendEmail(string email, string subject, string messageContent)
+		{
+			string user = "fitcookieai@gmail.com";
+			string pass = "ivleaifvsclnwbxe";
+			string smtpServer = "smtp.gmail.com";
+
+			bool ssl = true;
+
+			SmtpClient smtpClient = new SmtpClient();
+			NetworkCredential basicCredential = new NetworkCredential(user, pass);
+			MailMessage message = new MailMessage();
+			MailAddress fromAddress = new MailAddress(user);
+			smtpClient.Host = smtpServer;
+			if (ssl)
+			{
+				smtpClient.EnableSsl = true;
+				smtpClient.Port = 587;
+			}
+			else
+			{
+				smtpClient.Port = 26;
+			}
+			smtpClient.UseDefaultCredentials = false;
+			smtpClient.Credentials = basicCredential;
+
+			message.From = fromAddress;
+			message.Subject = subject;
+			//Set IsBodyHtml to true means you can send HTML email.
+			/*
+            message.IsBodyHtml = true;
+            message.Body = "<h1>Hello, this is a demo ... ..</h1>";
+            */
+			message.IsBodyHtml = false;
+			message.Body = messageContent;
+
+			message.To.Add(email);
+
+			try
+			{
+				smtpClient.Send(message);
+
+				response.Code = 201;
+				response.Body = "OK";
+				return new JsonResult(response);
+			}
+			catch (Exception ex)
+			{
+				response.Code = 500;
+				response.Body = "An error has occured: " + ex.Message + "\n Email has not been sent!";
+				response.Error = ex.ToString();
 				return new JsonResult(response);
 			}
 		}

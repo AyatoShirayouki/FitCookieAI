@@ -207,8 +207,15 @@
 
     ////////////////////////////////////////// Form validations /////////////////////////////////////////
 
-    //--------------------------------------------- Download the PDF file when the button is clicked - start -----------------------------------------
-    /*
+    $("#show-password").click(function () {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    });
+
     $("#download-btn").click(function () {
         var HTML_Width = $("#result-container").find("#pdf-content").width();
         var HTML_Height = $("#result-container").find("#pdf-content").height();
@@ -231,18 +238,8 @@
             pdf.save("Your_Diet_Plan.pdf");
         });
     });
-    */
 
-    $("#show-password").click(function () {
-        console.log("vliza");
-        var x = document.getElementById("password");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
-    });
-
+    /*
     $("#download-btn").click(function () {
         // clone the element
         var clone = $("#result-container").find("#pdf-content").clone();
@@ -260,7 +257,7 @@
         var HTML_Height = clone.height();
         var top_left_margin = 15;
         var PDF_Width = HTML_Width + (top_left_margin * 3.5);
-        var PDF_Height = (PDF_Width * 2.5) + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 2.5) + (top_left_margin * 2.5);
         var canvas_image_width = HTML_Width;
         var canvas_image_height = HTML_Height;
 
@@ -285,8 +282,7 @@
             clone.remove();
         });
     });
-
-
+    */
 
     //--------------------------------------------- Download the PDF file when the button is clicked - end -----------------------------------------
 

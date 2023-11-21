@@ -47,6 +47,7 @@ namespace FitCookieAI.Controllers
 		private GetAllPasswordRecoveryTokensResponse _getAllPasswordRecoveryTokensResponse;
 		private EditUserPasswordResponse _editUserPasswordResponse;
 		private SaveGeneratedPlansResponse _saveGeneratedPlansResponse;
+		private SendEmailResponse _sendEmailResponse;
 
 		string baseGPTUri;
 		string baseFitcookieAIUri;
@@ -544,9 +545,18 @@ namespace FitCookieAI.Controllers
 
 				if (_savePasswordRecoveryTokensResponse.Code != null && int.Parse(_savePasswordRecoveryTokensResponse.Code.ToString()) == 201)
 				{
-                    await SendEmailAsync(model.Email, "FitCookieAI Password restore.", $"Your recovery code is: {code}");
+					_sendEmailResponse = await _fitCookieAIRequestExecutor.SendEmailAction(_fitCookieAIRequestBuilder.SendEmailRequestBuilder(baseFitcookieAIUri,
+						model.Email, "FitCookieAI Password restore.", $"Your recovery code is: {code}"));
 
-                    return RedirectToAction("RestorePasswordStep2", "Home");
+					if (_sendEmailResponse.Code != null && int.Parse(_sendEmailResponse.Code.ToString()) == 201)
+					{
+						return RedirectToAction("RestorePasswordStep2", "Home");
+					}
+					else
+					{
+						ModelState.AddModelError("Email-error", "Something went wrong, your password recovery code cannot be sent!");
+						return View(model);
+					}
                 }
 				else
 				{

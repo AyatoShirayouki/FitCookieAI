@@ -88,7 +88,7 @@ namespace FitCookieAI_Data.Context
 			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             //User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitCookieAI_db
             //Server=4.234.153.155;Database=fitcookie;Port=5432;User ID=postgres;Password=fitcookieAI2023
-            optionsBuilder.UseNpgsql("User ID=postgres;Password=rexibexi1;Host=localhost;Port=5432;Database=FitCookieAI_db");
+            optionsBuilder.UseNpgsql("Server=4.234.153.155;Database=fitcookie;Port=5432;User ID=postgres;Password=fitcookieAI2023");
 		}
 	}
 }

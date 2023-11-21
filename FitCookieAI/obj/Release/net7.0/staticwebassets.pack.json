@@ -81,12 +81,24 @@
       "PackagePath": "staticwebassets\\img\\fitcookie-logo.png.webp"
     },
     {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.ico",
+      "PackagePath": "staticwebassets\\img\\fitcookieai_logo.ico"
+    },
+    {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.png",
       "PackagePath": "staticwebassets\\img\\fitcookieai_logo.png"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieloading_gif.gif",
       "PackagePath": "staticwebassets\\img\\fitcookieloading_gif.gif"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitdietai-logo-removebg-preview.ico",
+      "PackagePath": "staticwebassets\\img\\fitdietai-logo-removebg-preview.ico"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitdietai-logo-removebg-preview.png",
+      "PackagePath": "staticwebassets\\img\\fitdietai-logo-removebg-preview.png"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\loading-cookie.gif",

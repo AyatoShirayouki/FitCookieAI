@@ -85,6 +85,10 @@
 		{
 			return uri + _router.PasswordRecoveryTokens_Delete + $"id={id}";
 		}
+		public string SendEmailRequestBuilder(string uri, string email, string subject, string messageContent)
+		{
+			return uri + _router.PasswordRecoveryTokens_SendEmail + $"email={email}&subject={subject}&messageContent={messageContent}";
+		}
 		public string GetAllPasswordRecoveryTokensRequestBuilder(string uri)
 		{
 			return uri + _router.PasswordRecoveryTokens_GetAll;

@@ -30,6 +30,7 @@
 		//PasswordRecoveryTokens
 		public string PasswordRecoveryTokens_GetAll = "/api/PasswordRecoveryTokens/GetAll";
 		public string PasswordRecoveryTokens_GetById = "/api/PasswordRecoveryTokens/GetById?";
+		public string PasswordRecoveryTokens_SendEmail = "/api/PasswordRecoveryTokens/SendEmail?";
 		public string PasswordRecoveryTokens_Save = "/api/PasswordRecoveryTokens/Save";
 		public string PasswordRecoveryTokens_Delete = "/api/PasswordRecoveryTokens/Delete?";
 

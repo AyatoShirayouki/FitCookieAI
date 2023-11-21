@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a/b/vqnnMF3PFFTsMPd5DPdkYkKv7Ih9Xedy6bQ1xLs=",
+  "Hash": "/tePnUX0lfJ3ijLVgqimmgGTo8Og8ZkrZFAKYo1kL6g=",
   "Source": "FitCookieAI",
   "BasePath": "_content/FitCookieAI",
   "Mode": "Default",
@@ -284,6 +284,23 @@
       "OriginalItemSpec": "wwwroot\\img\\diet_icon_steps.png"
     },
     {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.ico",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/fitcookieai_logo.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\fitcookieai_logo.ico"
+    },
+    {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitcookieai_logo.png",
       "SourceId": "FitCookieAI",
       "SourceType": "Discovered",
@@ -333,6 +350,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\fitcookie-logo.png.webp"
+    },
+    {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitdietai-logo-removebg-preview.ico",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/fitdietai-logo-removebg-preview.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\fitdietai-logo-removebg-preview.ico"
+    },
+    {
+      "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitdietai-logo-removebg-preview.png",
+      "SourceId": "FitCookieAI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\",
+      "BasePath": "_content/FitCookieAI",
+      "RelativePath": "img/fitdietai-logo-removebg-preview.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\fitdietai-logo-removebg-preview.png"
     },
     {
       "Identity": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\loading-cookie.gif",

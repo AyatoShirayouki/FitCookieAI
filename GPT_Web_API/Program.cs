@@ -25,7 +25,7 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("token", "refreshToken"));
 });
 
 builder.Services.AddScoped(typeof(GPT_Service));

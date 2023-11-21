@@ -93,6 +93,14 @@
       "PackagePath": "staticwebassets\\img\\fitcookieloading_gif.gif"
     },
     {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitdietai-logo-removebg-preview.ico",
+      "PackagePath": "staticwebassets\\img\\fitdietai-logo-removebg-preview.ico"
+    },
+    {
+      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\fitdietai-logo-removebg-preview.png",
+      "PackagePath": "staticwebassets\\img\\fitdietai-logo-removebg-preview.png"
+    },
+    {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\img\\loading-cookie.gif",
       "PackagePath": "staticwebassets\\img\\loading-cookie.gif"
     },
@@ -119,18 +127,6 @@
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\checkout.js",
       "PackagePath": "staticwebassets\\js\\checkout.js"
-    },
-    {
-      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\html2canvas.js",
-      "PackagePath": "staticwebassets\\js\\html2canvas.js"
-    },
-    {
-      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\html2canvas.min.js",
-      "PackagePath": "staticwebassets\\js\\html2canvas.min.js"
-    },
-    {
-      "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\html2pdf.bundle.min.js",
-      "PackagePath": "staticwebassets\\js\\html2pdf.bundle.min.js"
     },
     {
       "Id": "E:\\Projects\\FitCookieAIClient-deployment\\FitCookieAI\\wwwroot\\js\\main.js",
