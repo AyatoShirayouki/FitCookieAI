@@ -1,0 +1,285 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.jumbotron {
+  position: relative;
+  height: 120vh;
+  background: url('https://i.ibb.co/60N87yC/bg-circle.png'), url('https://i.ibb.co/ZWC1Lwy/bg-triangle.png'), url('https://i.ibb.co/mF56G5x/bg-bottom.png'), linear-gradient(to bottom right, #fd8c25, #fbbc34);
+  background-size: auto, auto, 100%;
+  background-position: left 0 top 0, right 0 top 50%, center bottom;
+  /* background-position: left 0 top 0, right 0 top 50%, left 0 top 100%; */
+  background-repeat: no-repeat;
+  margin-bottom: 100px;
+}
+
+footer {
+  margin-top: 6rem;
+  padding-top: 11rem;
+  background: url('https://i.ibb.co/60N87yC/bg-circle.png'), url('https://i.ibb.co/ZWC1Lwy/bg-triangle.png'), url('https://i.ibb.co/3csXmqr/bg-top.png'), linear-gradient(to bottom right, #fd8c25, #fbbc34);
+  background-size: auto, auto, 100%;
+  background-position: left 0 bottom 0, right 0 top 50%, center top;
+  background-repeat: no-repeat;
+}
+
+/* 3 2 3 1/2 3 1 2 1  */
+
+/* Table Styles */
+
+.diet-plan-table-wrapper,
+.supplements-plan-table-wrapper,
+.shopping-basket-table-wrapper {
+  margin-bottom: 55px;
+}
+
+#diet_plan_table,
+#supplements_table,
+#shopping_basket_table {
+  border-spacing: 0;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+
+#shopping_basket_table {
+  width: 100%
+}
+
+
+#diet_plan_table tbody tr th,
+#diet_plan_table tbody tr td,
+#supplements_table tbody tr th,
+#supplements_table tbody tr td,
+#shopping_basket_table tbody tr th,
+#shopping_basket_table tbody tr td {
+  padding: 10px;
+}
+
+#diet_plan_table tbody tr th,
+#supplements_table tbody tr th,
+#shopping_basket_table tbody tr th {
+  color: #fff;
+  background-color: #fd8c25;
+}
+
+#diet_plan_table tbody tr th:first-child,
+#supplements_table tbody tr th:first-child,
+#shopping_basket_table tbody tr th:first-child {
+  border-top-left-radius: 10px;
+}
+
+#diet_plan_table tbody tr td:first-child,
+#supplements_table tbody tr td:first-child,
+#shopping_basket_table tbody tr td:first-child {
+  font-weight: bold;
+}
+
+#diet_plan_table tbody tr td:last-child,
+#supplements_table tbody tr td:nth-of-type(2) {
+  text-align: left;
+}
+
+#diet_plan_table tbody tr td:last-child,
+#supplements_table tbody tr td:nth-of-type(2),
+#supplements_table tbody tr td:first-child,
+#supplements_table tbody tr td:last-child {
+  line-height: 1.4;
+}
+
+#diet_plan_table tbody tr th:last-child,
+#supplements_table tbody tr th:last-child,
+#shopping_basket_table tbody tr th:last-child {
+  border-top-right-radius: 10px;
+}
+
+#diet_plan_table tbody tr th,
+#diet_plan_table tbody tr td,
+#supplements_table tbody tr th,
+#supplements_table tbody tr td,
+#shopping_basket_table tbody tr th,
+#shopping_basket_table tr td {
+  border-bottom: 2px solid #000;
+}
+
+#diet_plan_table tbody tr:last-child td,
+#supplements_table tbody tr:last-child td,
+#shopping_basket_table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#diet_plan_table tbody tr:first-child th:first-child,
+#diet_plan_table tbody tr td:first-child,
+#supplements_table tbody tr:first-child th:first-child,
+#supplements_table tbody tr:first-child th:nth-of-type(2),
+#supplements_table tbody tr td:first-child,
+#supplements_table tbody tr td:nth-of-type(2),
+#shopping_basket_table tbody tr:first-child th:first-child,
+#shopping_basket_table tbody tr td:first-child {
+  border-right: 2px solid #000;
+}
+
+
+
+/* Device Styling */
+
+@media only screen and (max-width: 950px) {
+  #about {
+    flex-direction: column;
+  }
+
+  .about-right {
+    text-align: center;
+  }
+
+  .about-right img {
+    width: 80%
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .jumbotron {
+    height: 150vh
+  }
+}
+
+@media only screen and (max-width: 900px) {
+
+  .main-header {
+    display: none !important;
+  }
+
+  .steps-container,
+  .feature-cards-container {
+    flex-direction: column;
+    gap: 65px !important;
+    align-items: center;
+  }
+
+  .step-card,
+  .feature-card {
+    width: 60% !important;
+  }
+}
+
+@media only screen and (min-width: 901px) {
+  .main-mobile-header {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 950px) and (max-width: 1250px) {
+  #dietPlanGenerator {
+    padding: 0 100px !important;
+  }
+
+  #weight,
+  #target-weight,
+  #height {
+    padding: 2.9rem 1.05rem 0.75rem !important;
+  }
+
+}
+
+@media only screen and (max-width: 950px) {
+
+  .components__holder,
+  .login-form__container,
+  .names,
+  .passwords,
+  .gender-date-of-birth {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .weight,
+  .target-weight,
+  .height,
+  .email-login,
+  .password-login,
+  .first-name-holder,
+  .last-name-holder,
+  .password-holder,
+  .confirm-password-holder,
+  .gender-holder,
+  .date-of-birth-holder {
+    width: 100% !important;
+    margin-bottom: 5px;
+  }
+}
+
+@media only screen and (max-width: 949px) {
+  #dietPlanGenerator {
+    padding: 0 50px !important;
+  }
+}
+
+@media only screen and (max-width: 870px) {
+  .address-quick-links {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .jumbotron-text-container {
+    padding-left: 4.2rem !important;
+  }
+
+  #dietPlanGenerator {
+    padding: 0 !important;
+  }
+
+  .copyright-container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+  .jumbotron-text-container {
+    padding-top: 6rem !important;
+  }
+}
+
+@media only screen and (width: 820px) and (height: 1180px) and (orientation: portrait) {
+  .jumbotron {
+    height: 60vh !important;
+  }
+}
