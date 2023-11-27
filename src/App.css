@@ -175,11 +175,17 @@ footer {
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 389px) and (orientation: portrait) {
   .jumbotron {
     height: 150vh
   }
 }
+
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+  .jumbotron {
+    height: 170vh
+  }
+} 
 
 @media only screen and (max-width: 900px) {
 
@@ -269,6 +275,11 @@ footer {
 
   .copyright-container {
     flex-direction: column;
+  }
+
+  .content-wrapper, .footer-content-wrapper {
+    padding-left: 45px!important;
+    padding-right: 45px!important;
   }
 }
 

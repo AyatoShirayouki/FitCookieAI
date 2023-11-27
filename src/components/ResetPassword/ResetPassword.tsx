@@ -106,7 +106,7 @@ const ResetPassword = ({ loginResponse }: ResetPasswordProps) => {
     const verifyEmail = async (event: any) => {
         event.preventDefault();
         try {
-            const response = await axios.get(`https://localhost:7002/api/Users/VerifyUserByEmail?email=${email}`,
+            const response = await axios.get(`http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/Users/VerifyUserByEmail?email=${email}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -127,7 +127,7 @@ const ResetPassword = ({ loginResponse }: ResetPasswordProps) => {
     const getPasswordRecoveryTokens = async (event: any) => {
         event.preventDefault();
         try {
-            const response = await axios.get(`https://localhost:7002/api/PasswordRecoveryTokens/GetAll`,
+            const response = await axios.get(`http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/PasswordRecoveryTokens/GetAll`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -166,7 +166,7 @@ const ResetPassword = ({ loginResponse }: ResetPasswordProps) => {
             UserId: userId
         }
         try {
-            await fetch("https://localhost:7002/api/PasswordRecoveryTokens/Save", {
+            await fetch("http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/PasswordRecoveryTokens/Save", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -177,7 +177,7 @@ const ResetPassword = ({ loginResponse }: ResetPasswordProps) => {
             console.error("Error:", error);
         }
         try {
-            const response = await axios.post(`https://localhost:7002/api/PasswordRecoveryTokens/SendEmail?email=${email}&subject=${subject}&messageContent=${messageContent}`,
+            const response = await axios.post(`http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/PasswordRecoveryTokens/SendEmail?email=${email}&subject=${subject}&messageContent=${messageContent}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -224,7 +224,7 @@ const ResetPassword = ({ loginResponse }: ResetPasswordProps) => {
     const resetPassword = async (event: any) => {
         event.preventDefault();
         try {
-            await axios.get(`https://localhost:7002/api/Users/EditUserPassword?password=${password}&tokenId=${tokenId}`,
+            await axios.get(`http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/Users/EditUserPassword?password=${password}&tokenId=${tokenId}`,
                 {
                     headers: {
                         "Content-Type": "application/json",

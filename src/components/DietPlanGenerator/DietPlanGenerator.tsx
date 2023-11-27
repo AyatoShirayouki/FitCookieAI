@@ -229,7 +229,7 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
         const dataCopy = { ...data };
         delete dataCopy.confirmPassword;
         try {
-            const response = await fetch("https://localhost:7002/api/Users/SignUp", {
+            const response = await fetch("http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/Users/SignUp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -257,7 +257,7 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
         // localStorage.setItem('password', JSON.stringify(!email && !password ? loginData.password : password));
         // const response = await fetch(!email && !password ? `https://localhost:7002/api/Users/Login?email=${loginData.email}&password=${loginData.password}` : `https://localhost:7002/api/Users/Login?email=${email}&password=${password}`);
         setIsGenerating(true);
-        const response = await axios.get(!email && !password ? `https://localhost:7002/api/Users/Login?email=${loginData.email}&password=${loginData.password}` : `https://localhost:7002/api/Users/Login?email=${email}&password=${password}`);
+        const response = await axios.get(!email && !password ? `http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/Users/Login?email=${loginData.email}&password=${loginData.password}` : `http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/Users/Login?email=${email}&password=${password}`);
         const { data: { body, code, error }, headers: { token, refreshtoken } } = response;
         if (code === 201) setTokens({ token, refreshtoken });
         if (email && password) return body;
@@ -309,7 +309,7 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
     const generateDietAndSupplementPlans = async () => {
         setIsGenerating(true);
         try {
-            const responseDietPlan = await axios.get(`https://localhost:7114/api/GPT/GetGPTResponse?input=${getDietPlanInput()}`,
+            const responseDietPlan = await axios.get(`http://fitcookieai.uksouth.cloudapp.azure.com:8088/api/GPT/GetGPTResponse?input=${getDietPlanInput()}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -321,7 +321,7 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
             const { data: { choices: dietChoices }, headers: { token, refreshtoken } } = responseDietPlan;
 
 
-            const responseSupplementPlan = await axios.get(`https://localhost:7114/api/GPT/GetGPTResponse?input=${getSupplementsInput()}`, {
+            const responseSupplementPlan = await axios.get(`http://fitcookieai.uksouth.cloudapp.azure.com:8088/api/GPT/GetGPTResponse?input=${getSupplementsInput()}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "token": token,
@@ -385,7 +385,7 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
     const generateShoppingBasket = async () => {
         setIsGenerating(true);
         try {
-            const responseDietPlan = await axios.get(`https://localhost:7114/api/GPT/GetGPTResponse?input=${extractUniqueIngredients()}`,
+            const responseDietPlan = await axios.get(`http://fitcookieai.uksouth.cloudapp.azure.com:8088/api/GPT/GetGPTResponse?input=${extractUniqueIngredients()}`,
                 {
                     headers: {
                         "Content-Type": "application/json",

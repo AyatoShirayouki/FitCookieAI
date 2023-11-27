@@ -126,7 +126,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginResponse }: 
     const logout = async () => {
         console.log(loginResponse);
         const { body: { id: userId } } = loginResponse;
-        await fetch(`https://localhost:7002/api/Users/Logout?userId=${userId}`);
+        await fetch(`http://fitcookieai.uksouth.cloudapp.azure.com:8087/api/Users/Logout?userId=${userId}`);
         // localStorage.removeItem('email');
         // localStorage.removeItem('password');
         setIsLoggedIn(false);

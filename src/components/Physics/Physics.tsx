@@ -88,7 +88,8 @@ const Physics = ({ healthGoal, currentWeight, setCurrentWeight, targetWeight, se
 
     useEffect(() => {
         if (typeof currentWeight === 'string' && currentWeight !== '' && typeof height === 'string' && height !== '') {
-            const bmi = Number(currentWeight) / (Number(height) * Number(height));
+            const heightInCm = Number(height) / 100;
+            const bmi = Number((Number(currentWeight) / (heightInCm * heightInCm)).toFixed(2));
             setBMI(bmi);
             return;
         }

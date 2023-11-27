@@ -14,7 +14,7 @@ const wrapperStyles: React.CSSProperties = {
 
 const Wrapper = ({ children }: WrapperProps) => {
     return (
-        <section style={wrapperStyles}>
+        <section style={wrapperStyles} className="content-wrapper">
             {children}
         </section>
     )

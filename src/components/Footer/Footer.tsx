@@ -114,7 +114,7 @@ const Footer = ({ }) => {
                     </div>
                 </div>
                 <div className='copyright-container' style={copyRightContainer}>
-                    <p style={copyRightParagraph}>© <a href="#" style={copyRightAnchor}>FitCookieAI</a>, All Right Reserved. Designed By <a href="#" style={copyRightAnchor}>Alexander Nestorov</a>. Distributed By <a href="#" style={copyRightAnchor}>Rosen Rosenov</a>.</p>
+                    <p style={copyRightParagraph}>© <a href="#" style={copyRightAnchor}>FitCookieAI</a>, All Right Reserved. Designed and distributed by <a href="https://aisy.tech/" target='_blank' style={copyRightAnchor}>Aisy Tech Ltd</a>.</p>
                     <h1 className='powered-by-open-ai' style={poweredByOpenAI}>Powered by <img src='https://i.ibb.co/NnvyZzQ/open-AI-logo.png' width={50} /> Open AI</h1>
                 </div>
             </div>
