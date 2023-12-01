@@ -104,12 +104,12 @@ const initSignUpState = { Email: '', Password: '', confirmPassword: '', FirstNam
 
 const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginResponse }: DietPlanGeneratorProps) => {
     const [currentQuestion, setCurrentQuestion] = useState<any>(1);
-    const [healthGoal, setHealthGoal] = useState('');
+    const [healthGoal, setHealthGoal] = useState('loseWeight');
     const [currentWeight, setCurrentWeight] = useState(null);
     const [targetWeight, setTargetWeight] = useState(null);
     const [height, setHeight] = useState(null);
     const [occupation, setOccupation] = useState('');
-    const [activityLevel, setActivityLevel] = useState('');
+    const [activityLevel, setActivityLevel] = useState('sedentary');
     const [dietaryRestriction, setDietaryRestrictions] = useState('');
     const [foodPreferences, setFoodPreferences] = useState('');
     const [BMI, setBMI] = useState(null);
@@ -292,18 +292,17 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
     }, [isLoggedIn])
 
     const getDietPlanInput = () => {
-        const { body: { dob } } = loginResponse;
+        const { body: { dob, gender } } = loginResponse;
         const years = getUserYears(dob);
-        return `As a profesional dietitian recommend me a diverse diet plan with a large variety of delicious meals meals which must be different for every day of the week, I am a male, ${years} years old, I weigh ${currentWeight} kilograms, my target weight is ${targetWeight} kilograms, my height is ${height} meters, my BMI is ${BMI}, my activity level is ${activityLevel} ${dietaryRestriction} ${foodPreferences}, my healt goal is to ${healthGoal}, and my oocupations is ${occupation}. Return the result as a HTML table with id=diet_plan_table in html format with colums: day of the week and meals(here you should include the quantity of each part of the meal in grams)`
+        return `As a profesional dietitian recommend me a diverse diet plan with a large variety of delicious meals meals which must be different for every day of the week, I am a ${gender}, ${years} years old, I weigh ${currentWeight} kilograms, my target weight is ${targetWeight} kilograms, my height is ${height} meters, my BMI is ${BMI}, my activity level is ${activityLevel}${validateInput(dietaryRestriction, 1) ? `, My dietary restrictions are ${dietaryRestriction}` : ``} ${validateInput(foodPreferences, 1) ? `, My food preferences are ${foodPreferences}` : ``}, my healt goal is to ${healthGoal}, and my oocupations is ${occupation}. Return the result as a HTML table with id=diet_plan_table in html format with colums: day of the week and meals(here you should include the quantity of each part of the meal in grams)`
     };
 
     const getSupplementsInput = () => {
-        const { body: { dob } } = loginResponse;
+        const { body: { dob, gender } } = loginResponse;
         const years = getUserYears(dob);
         return `As a profesional dietitian recomend me a list of supplements, how much of them should i take per day and briefly explain the benefits of each of them,
         (strenght building and health related) which would help me based on my needs in html format as a html table with id=supplements_table and with collumns Supplement, Description and Dose per day.
-        I am a ${loginResponse.body.Gender}, ${years} years old, I weight ${currentWeight} kilograms, my target weight is ${targetWeight} kilograms, my height is ${height} meters, my BMI is ${BMI}, my activity level is ${activityLevel}
-        ${dietaryRestriction} ${foodPreferences}, my healt goal is to ${healthGoal}, and my oocupations is ${occupation}.`;
+        I am a ${gender}, ${years} years old, I weight ${currentWeight} kilograms, my target weight is ${targetWeight} kilograms, my height is ${height} meters, my BMI is ${BMI}, my activity level is ${activityLevel}${validateInput(dietaryRestriction, 1) ? `, My dietary restrictions are ${dietaryRestriction}` : ``} ${validateInput(foodPreferences, 1) ? `, My food preferences are ${foodPreferences}` : ``}, my healt goal is to ${healthGoal}, and my oocupations is ${occupation}.`;
     };
 
     const generateDietAndSupplementPlans = async () => {
@@ -357,28 +356,18 @@ const DietPlanGenerator = ({ isLoggedIn, setIsLoggedIn, loginResponse, setLoginR
 
     const extractUniqueIngredients = () => {
         if (isLoggedIn && !isGenerating && tables.dietPlan && tables.supplements) {
-            const uniqueIngredients = new Set();
+            const uniqueIngredients: string[] = [];
             const dietPlanTable = document.getElementById("diet_plan_table");
             const rows = dietPlanTable!.querySelectorAll("tbody tr");
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 const mealText = row.querySelector("td:nth-child(2)")!.textContent;
-                const mealComponents = mealText!.split('<br>');
-                mealComponents.forEach(meal => {
-                    const ingredients = meal.split(', ');
-                    ingredients.forEach(ingredient => {
-                        const matches = ingredient.match(/([0-9]+\/?[0-9]\s[a-zA-Z]*\s)?([a-zA-Z\s]+)(,|$)/);
-                        if (matches) {
-                            const measurement = matches[1] ? matches[1].trim() : '';
-                            const name = matches[2] ? matches[2].trim() : '';
-                            if (name) {
-                                uniqueIngredients.add(`${measurement} ${name}`);
-                            }
-                        }
-                    });
-                });
+                console.log(mealText);
+                const regex = /(\d+\s?\w+\s(?:of\s)?(?:[a-zA-Z]+\s?)*)/g;
+                const matches = mealText?.match(regex);
+                if (matches) matches.forEach((match) => { if (!uniqueIngredients.includes(match)) uniqueIngredients.push(match) })
             }
-            return `Please examine the following list of ingredients: ${Array.from(uniqueIngredients).join(", ")}. For each ingredient, identify the fundamental grocery item that needs to be purchased from a supermarket. Please exclude any preparation methods (like 'steamed', 'diced', 'grilled' etc.) and convert the quantities to either grams or kilograms. Present the results in an HTML table with an id of 'shopping_basket_table', containing columns for 'Product' and 'Quantity'.`;
+            return `Please examine the following list of ingredients: ${uniqueIngredients.join(", ")}. For each ingredient, identify the fundamental grocery item that needs to be purchased from a supermarket. Please exclude any preparation methods (like 'steamed', 'diced', 'grilled' etc.) and convert the quantities to either grams or kilograms. Present the results in an HTML table with an id of 'shopping_basket_table', containing columns for 'Product' and 'Quantity'.`;
         }
     };
 
